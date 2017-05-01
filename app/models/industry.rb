@@ -1,3 +1,3 @@
 class Industry < ApplicationRecord
-  validates :industry, presence:true
+  validates :name, presence:true
 end

@@ -9,7 +9,8 @@ class JobsController < ApplicationController
         when 'by_min_salary'
           #  Job.all.order(salaryMin: :DESC).paginate(page: params[:page])
           @jobs = @q.result(distinct: true).order(salaryMin: :DESC).page(params[:page])
-
+        when 'by_default'
+          @jobs = @q.result(distinct: true).order(udpated_at: :DESC).page(params[:page])
         when 'by_max_salary'
           #  Job.where(hide:false).order(salaryMax: :DESC).paginate(page: params[:page])
           @jobs = @q.result(distinct: true).order(salaryMax: :DESC).page(params[:page])
@@ -17,6 +18,9 @@ class JobsController < ApplicationController
           # Job.where(hide:false).order(created_at: :DESC).paginate(page: params[:page])
           @jobs = @q.result(distinct: true).order(created_at: :DESC).page(params[:page])
       end
+    @workplaces = Workplace.all
+    @industries = Industry.all
+      
   end
 
   def show
@@ -48,7 +52,8 @@ class JobsController < ApplicationController
   end
 
   def search
-    
+    @q = Job.ransack(params[:q])
+    @jobs = @q.result(distinct: true).order(created_at: :DESC).page(params[:page])
   end
 
 end
