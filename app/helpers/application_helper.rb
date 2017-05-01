@@ -15,4 +15,14 @@ module ApplicationHelper
   def devise_mapping
     @devise_mapping ||= Devise.mappings[:user]
   end
+
+
+  def show_searchbar_in_navbar
+    if false == params[:controller].blank? && params[:controller].start_with?('helloworld')
+      return true
+    else
+      return false
+    end
+  end
+
 end

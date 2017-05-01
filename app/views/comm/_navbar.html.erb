@@ -4,7 +4,9 @@
       <a class="navbar-brand" href="/"><img src="<%= image_url 'logo2.png' %>"/><span class="brand-name">今日招聘</span></a>
     </div>
     <div class="col-sm-7 col-md-7 ">
+          <% if true == show_searchbar_in_navbar%>
           <%= render "comm/searchbar" %>
+          <% end %>
     </div>
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
