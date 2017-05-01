@@ -6,13 +6,13 @@ class Job < ApplicationRecord
   validates :work_years, presence:true
   validates :work_place, presence:true
   validates :education, presence:true
-  validates :industry, presence:true
+
 
   belongs_to :user
   has_many :resumes
   has_many :comments
   belongs_to :company
-  
+
   ransack_alias :searchjob, :title_or_description
 
 

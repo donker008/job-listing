@@ -6,6 +6,11 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
     <link rel="shortcut icon" href="images/favicon.ico"/>
   </head>
 
@@ -74,6 +79,7 @@
 
       }
 
+      // update select status
       {
         var place =  localStorage.getItem('place');
         var work_years =  localStorage.getItem('work_years');
@@ -94,6 +100,7 @@
 
         console.log("place : " + place + " workyears: " + work_years + " education: " + education + " industry: " + industry + " search :" + search);
       }
+
 
 
       $("#job_search").submit(function() {
@@ -118,7 +125,7 @@
           if(parseInt(industry) != -1){
             valuesToSubmit += "&q[company_industry_eq]="+industry;
           }
-          alert(valuesToSubmit);
+          // alert(valuesToSubmit);
 
           valuesToSubmit = encodeURLComponent(valuesToSubmit);
           console.log("valuesToSubmit = " + valuesToSubmit);
@@ -135,6 +142,49 @@
             // alert(error);
           });
       });
+    });
+
+    $('.selectpicker').on('change', function() {
+      // <option value="1">不限</option>
+      // <option value="2">2 ~ 5k</option>
+      // <option value="3">5 ~ 10k</option>
+      // <option value="4">10 ~ 20k</option>
+      // <option value="5">20 ~ 30k</option>
+      // <option value="6">30k以上</option>
+      var myurl = "/jobs"
+      var value = this.value;
+      if(1 != value){
+        if(2 == value){
+            myurl += "?order=by_salary_2k_5k";
+        }
+        else if(3 == value){
+          myurl += "?order=by_salary_5k_10k";
+        }
+        else if(4 == value){
+          myurl += "?order=by_salary_10k_20k";
+        }
+        else if(5 == value){
+          myurl += "?order=by_salary_20k_30k";
+        }
+        else if(6 == value){
+          myurl += "?order=by_salary_30kabove";
+        }
+      }
+      window.open(myurl,'_self');
+
+      $.ajax(myurl,{
+      success: function(data) {
+         console.log("success " + data);
+          //  $("html").html(data);
+           var newDoc = document.open("text/html", "replace");
+           newDoc.write(data);
+           newDoc.close();
+      },
+      error: function() {
+         console.log('An error occurred');
+      }});
+
+
     })
 
 

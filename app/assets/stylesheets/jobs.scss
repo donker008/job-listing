@@ -52,3 +52,47 @@
 .filter_option .input-group{
   margin-left: 100px;
 }
+
+.order{
+  margin: 100px;
+  background-color: white;
+}
+
+.order .order_part{
+  background-color: white;
+  margin: 0 -65px 0 -145px;
+  padding: 10px 145px;
+}
+
+.order .dropdown{
+  display: inline-block;
+}
+
+.order .order_title{
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 10px;
+}
+
+.order .order_item{
+  color: #6E6E6E;
+  text-decoration: none;
+  margin: 8px;
+}
+.order  .active{
+  color: white;
+  text-decoration: none;
+}
+.order .order_inner_part{
+  background-color: #f1f1f1;
+  margin: 20px 0 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+// .order a:active,
+// .order a:focus{
+//   color: white;
+//   background-color: #00c5b6;
+//   padding: 6px;
+// }

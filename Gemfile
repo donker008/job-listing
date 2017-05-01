@@ -37,6 +37,7 @@ gem 'carrierwave', '~> 0.9'
 gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'will_paginate', github: 'jonatack/will_paginate'
 gem "intercom-rails"
+gem 'bootstrap-select-rails', '~> 1.6', '>= 1.6.3'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
