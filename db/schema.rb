@@ -10,7 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170411072155) do
+ActiveRecord::Schema.define(version: 20170501054426) do
+
+  create_table "comments", force: :cascade do |t|
+    t.text     "content"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "companies", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "brand_icon"
+    t.string   "industry"
+    t.float    "stars"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "jobs", force: :cascade do |t|
     t.string   "title"
@@ -19,9 +36,18 @@ ActiveRecord::Schema.define(version: 20170411072155) do
     t.integer  "salaryMin"
     t.text     "contact"
     t.boolean  "hide"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.integer  "user_id"
+    t.string   "work_place"
+    t.integer  "work_years",  default: -1
+    t.string   "education"
+    t.integer  "star1"
+    t.integer  "star2"
+    t.integer  "star3"
+    t.integer  "star4"
+    t.integer  "star5"
+    t.integer  "company_id"
   end
 
   create_table "resumes", force: :cascade do |t|
@@ -46,7 +72,7 @@ ActiveRecord::Schema.define(version: 20170411072155) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
-    # t.boolean  "isAdmin",                default: false
+    t.boolean  "isAdmin",                default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
