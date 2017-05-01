@@ -45,8 +45,101 @@
           });
         } // End if
       });
+    });
+
+    $(document).ready(function(){
+      $(".filter_part a").on('click', function(event){
+          var id = $(this).parent().prop("id");
+          var type = parseInt($(this).prop("id"));
+          localStorage.setItem(id, type);
+          $(this).parent().find("a").removeClass("active");
+          $(this).addClass("active");
+          // alert("id : " + id + "  type:" + type);
+      });
+
+      function updateItemState(objectid, value){
+        if(value != 1){
+          $(objectid).find("a").each(function (index) {
+            $(this).removeClass("active");
+            if($(this).prop("id") == value){
+              $(this).addClass("active");
+              console.log("objectid: " + objectid +  " active" + $(this).toString() + " index : " + (index+1));
+            }
+          });
+        }
+        else{
+          $(objectid).find("a").first().addClass("active");
+          console.log("objectid: " + objectid +  " active" + $(this).toString());
+        }
+
+      }
+
+      {
+        var place =  localStorage.getItem('place');
+        var work_years =  localStorage.getItem('work_years');
+        var education =  localStorage.getItem('education');
+        var industry =  localStorage.getItem('industry');
+        var search = localStorage.getItem('search');
+
+
+        updateItemState('#place', place);
+        updateItemState('#work_years', work_years);
+        updateItemState('#education', education);
+        updateItemState('#industry', industry);
+        if(search == null){
+          search = "今日招聘";
+        }
+
+        $('#search-input').attr("placeholder",search).val('').focus().blur();
+
+        console.log("place : " + place + " workyears: " + work_years + " education: " + education + " industry: " + industry + " search :" + search);
+      }
+
+
+      $("#job_search").submit(function() {
+          var searchword = $(this).parent().find("#search-input").val();
+          localStorage.setItem("search", searchword);
+          var valuesToSubmit = $(this).serialize();
+          //utf8=✓&q[searchjob_cont]=&q[title_cont]=
+          valuesToSubmit = decodeURIComponent(valuesToSubmit);
+          var place =  localStorage.getItem('place');
+          var work_years =  localStorage.getItem('work_years');
+          var education =  localStorage.getItem('education');
+          var industry =  localStorage.getItem('industry');
+          if(parseInt(place) != -1){
+            valuesToSubmit += "&q[work_place_eq]="+place;
+          }
+          if(parseInt(work_years) != -1){
+            valuesToSubmit += "&q[work_years_eq]="+work_years;
+          }
+          if(parseInt(education) != -1){
+            valuesToSubmit += "&q[education_eq]="+education;
+          }
+          if(parseInt(industry) != -1){
+            valuesToSubmit += "&q[company_industry_eq]="+industry;
+          }
+          alert(valuesToSubmit);
+
+          valuesToSubmit = encodeURLComponent(valuesToSubmit);
+          console.log("valuesToSubmit = " + valuesToSubmit);
+          $.ajax({
+            type: "POST",
+            url: $(this).prop('action'),
+            data: valuesToSubmit,
+            dataType: "JSON"
+          }).success(function (json) {
+            console.log(json);
+             alert(json);
+          }).error(function (error) {
+            console.log(error);
+            // alert(error);
+          });
+      });
     })
+
+
     </script>
+
 
   </body>
 

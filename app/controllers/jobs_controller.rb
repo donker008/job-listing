@@ -5,7 +5,7 @@ class JobsController < ApplicationController
 
     @q = Job.ransack(params[:q])
 
-      @jobs = case params[:order]
+    @jobs = case params[:order]
         when 'by_min_salary'
           #  Job.all.order(salaryMin: :DESC).paginate(page: params[:page])
           @jobs = @q.result(distinct: true).order(salaryMin: :DESC).page(params[:page])
@@ -20,7 +20,7 @@ class JobsController < ApplicationController
       end
     @workplaces = Workplace.all
     @industries = Industry.all
-      
+
   end
 
   def show
@@ -32,28 +32,28 @@ class JobsController < ApplicationController
   end
 
   def new
-    flash[:warning] = "You can create job!"
+    flash[:warning] = "You cant create job!"
     redirect_to jobs_path
   end
 
   def create
-    flash[:warning] = "You can create job!"
+    flash[:warning] = "You cant create job!"
     redirect_to jobs_path
   end
 
   def edit
-    flash[:warning] = "You can edit job!"
+    flash[:warning] = "You cant edit job!"
     redirect_to jobs_path
   end
 
   def destroy
-    flash[:warning] = "You can delete job!"
+    flash[:warning] = "You cant delete job!"
     redirect_to jobs_path
   end
 
   def search
     @q = Job.ransack(params[:q])
-    @jobs = @q.result(distinct: true).order(created_at: :DESC).page(params[:page])
+    @jobs = @q.result(distinct: true).includes(:company).order(created_at: :DESC).page(params[:page])
   end
 
 end

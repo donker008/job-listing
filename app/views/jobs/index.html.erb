@@ -9,7 +9,7 @@
           <span class="title">工作地点:</span>
           <% @workplaces.limit(5).each_with_index do |place, index| %>
             <% if 0 == index %>
-                <a class="filter_place_item active" id="-1"><%= place.name %></a>
+                <a class="filter_place_item active" id="<%= index+1 %>"><%= place.name %></a>
             <% else %>
                 <a class="filter_place_item place" id="<%= index+1 %>"><%= place.name %></a>
             <% end %>
@@ -19,28 +19,28 @@
       </li>
       <li class="chosen" id = "work_years">
         <span class="title">工作经验:</span>
-        <a href="javascript:;" class="active" id="-1">不限</a>
-        <a href="javascript:;" id="1">应届毕业生</a>
-        <a href="javascript:;" id="2">3年以下</a>
-        <a href="javascript:;" id="3">3-5年</a>
-        <a href="javascript:;" id="4">5-10年</a>
-        <a href="javascript:;" id="5">10年以上</a>
+        <a href="javascript:;" class="active" id="1">不限</a>
+        <a href="javascript:;" id="2">应届毕业生</a>
+        <a href="javascript:;" id="3">3年以下</a>
+        <a href="javascript:;" id="4">3-5年</a>
+        <a href="javascript:;" id="5">5-10年</a>
+        <a href="javascript:;" id="6">10年以上</a>
         </li>
         <li class="chosen" id = "education">
           <span class="title">学历要求:</span>
-          <a href="javascript:;" class="active" id="-1">不限</a>
-          <a href="javascript:;" id="1">大专</a>
-          <a href="javascript:;" id="2">本科</a>
-          <a href="javascript:;" id="3">硕士</a>
-          <a href="javascript:;" id="4">博士</a>
+          <a href="javascript:;" class="active" id="1">不限</a>
+          <a href="javascript:;" id="2">大专</a>
+          <a href="javascript:;" id="3">本科</a>
+          <a href="javascript:;" id="4">硕士</a>
+          <a href="javascript:;" id="5">博士</a>
         </li>
         <li class="chosen" id = "industry">
           <span class="title">行业领域:</span>
           <%  @industries.limit(5).each_with_index do |industry, index| %>
               <% if index == 0 %>
-                <a href="JavaScript:;" class="active" id="-1"> <%= industry.name %> </a>
+                <a href="JavaScript:;" class="active" id="<%=index+1%>"> <%= industry.name %> </a>
               <% else %>
-              <a href="JavaScript:;" id="<%=index-1%>" id="<%=index+1%>"  > <%= industry.name %> </a>
+              <a href="JavaScript:;"  id="<%=index+1%>"  > <%= industry.name %> </a>
               <% end %>
           <% end %>
           <span class="btn-more" href="javascript:;">更多 <i class="fa fa-sort-desc" aria-hidden="true"></i></span>
@@ -72,17 +72,3 @@
 </div>
 
 </div>
-
-<script>
-
-$(document).ready(function(){
-  $(".filter_part a").on('click', function(event){
-      var id = $(this).parent().prop("id");
-      var type = parseInt($(this).prop("id"));
-      localStorage.setItem(id, type);
-      $(this).parent().find("a").removeClass("active");
-      $(this).addClass("active");
-      // alert("id : " + id + "  type:" + type);
-  });
-})
-</script>
