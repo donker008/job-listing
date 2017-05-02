@@ -1,0 +1,23 @@
+
+<div id="jobs_grid">
+  <table class="table">
+  <thead>
+
+    <th>job</th>
+    <th>description</th>
+    <th>salary</th>
+    <th>contact</th>
+    <th>date</th>
+  </thead>
+  <tbody>
+    <%= render :partial => "jobitem", :collection => @jobs , :as => :job  %>
+  </tbody>
+  </table>
+
+  <div class="row">
+    <div class="flickr_pagination">
+        <%= will_paginate @jobs, :container => false , remote: true %>
+    </div>
+  </div>
+
+</div>

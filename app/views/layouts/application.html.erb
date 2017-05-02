@@ -59,8 +59,150 @@
           localStorage.setItem(id, type);
           $(this).parent().find("a").removeClass("active");
           $(this).addClass("active");
-          // alert("id : " + id + "  type:" + type);
+
       });
+
+      $(".filter_part a").on('click', function(event){
+
+          var value = $(this).value;
+          var needUseAjax = false;
+          var valuesToSubmit = '';
+          var ahref = $(this).attr("href");
+
+          //sort new , default
+          var linkid = ($(this).prop("id"));
+
+          if(linkid=='order_new'){
+            valuesToSubmit =  valuesToSubmit == null ? 'order=by_new':'&order=by_new';
+            localStorage.setItem("order", order);
+            needUseAjax = true;
+
+          }
+          else if(linkid == 'order_default'){
+            valuesToSubmit =  valuesToSubmit == null ? 'order=by_default':'&order=by_default';
+            localStorage.setItem("order", order);
+            needUseAjax = true;
+          }
+          console.log("valuesToSubmit" + valuesToSubmit + "href : " + href);
+
+          if(needUseAjax){
+
+            var myurl = "/jobs/search";
+            var place =  localStorage.getItem('place');
+            var work_years =  localStorage.getItem('work_years');
+            var education =  localStorage.getItem('education');
+            var industry =  localStorage.getItem('industry');
+
+            if(parseInt(place) != -1){
+              valuesToSubmit += "&q[work_place_eq]="+place;
+            }
+            if(parseInt(work_years) != -1){
+              valuesToSubmit += "&q[work_years_eq]="+work_years;
+            }
+            if(parseInt(education) != -1){
+              valuesToSubmit += "&q[education_eq]="+education;
+            }
+            if(parseInt(industry) != -1){
+              valuesToSubmit += "&q[company_industry_eq]="+industry;
+            }
+
+
+            valuesToSubmit = encodeURIComponent(valuesToSubmit);
+
+            console.log("linkid : " + linkid );
+
+            //will_page
+
+            if(valuesToSubmit != null){
+
+              $.ajax({
+                type: "POST",
+                url: myurl,
+                data: valuesToSubmit,
+                dataType: "html"
+              }).success(function (json) {
+                eval(json);
+              }).error(function (error) {
+                console.log(error);
+              });
+            }
+          }
+
+
+      });
+
+      $(document).on('click','.flickr_pagination a', {}, function(event){
+
+          var value = $(event.target).text()
+          var needUseAjax = false;
+          var valuesToSubmit = '';
+          var ahref = $(this).attr("href");
+
+          // alert(ahref + " value: " + value);
+
+          //will page
+          if(ahref.startsWith('/jobs/search?')){
+            needUseAjax = true;
+            if(value != null){
+              valuesToSubmit = "page="+value;
+            }
+          }
+
+          console.log("valuesToSubmit" + valuesToSubmit + " href : " + ahref);
+
+          if(needUseAjax){
+
+            var myurl = "/jobs/search";
+            var place =  localStorage.getItem('place');
+            var work_years =  localStorage.getItem('work_years');
+            var education =  localStorage.getItem('education');
+            var industry =  localStorage.getItem('industry');
+            var order = localStorage.getItem('order');
+
+            if(parseInt(place) != -1){
+              valuesToSubmit += "&q[work_place_eq]="+place;
+            }
+            if(parseInt(work_years) != -1){
+              valuesToSubmit += "&q[work_years_eq]="+work_years;
+            }
+            if(parseInt(education) != -1){
+              valuesToSubmit += "&q[education_eq]="+education;
+            }
+            if(parseInt(industry) != -1){
+              valuesToSubmit += "&q[company_industry_eq]="+industry;
+            }
+
+            if(order != null){
+              valuesToSubmit += "&";
+              valuesToSubmit += order;
+            }
+
+
+
+            valuesToSubmit = encodeURIComponent(valuesToSubmit);
+            //will_page
+            console.log("ahref : " + ahref + " valuesToSubmit:" + valuesToSubmit);
+            if(valuesToSubmit != null){
+
+              $.ajax({
+                type: "POST",
+                url: myurl,
+                data: valuesToSubmit,
+                dataType: "html"
+              }).success(function (json) {
+                eval(json);
+                console.log(json);
+              }).error(function (error) {
+                console.log(error);
+              });
+            }
+          }
+
+
+      });
+
+
+
 
       function updateItemState(objectid, value){
         if(value != 1){
@@ -93,11 +235,11 @@
         updateItemState('#education', education);
         updateItemState('#industry', industry);
         if(search == null){
-          search = "今日招聘";
+          $('#search-input').attr("placeholder","今日招聘").val('').focus().blur();
         }
-
-        $('#search-input').attr("placeholder",search).val('').focus().blur();
-
+        else{
+          $('#search-input').val(search).focus().blur();
+        }
         console.log("place : " + place + " workyears: " + work_years + " education: " + education + " industry: " + industry + " search :" + search);
       }
 
@@ -113,6 +255,8 @@
           var work_years =  localStorage.getItem('work_years');
           var education =  localStorage.getItem('education');
           var industry =  localStorage.getItem('industry');
+          var order = localStorage.getItem('order');
+
           if(parseInt(place) != -1){
             valuesToSubmit += "&q[work_place_eq]="+place;
           }
@@ -125,65 +269,83 @@
           if(parseInt(industry) != -1){
             valuesToSubmit += "&q[company_industry_eq]="+industry;
           }
-          // alert(valuesToSubmit);
 
-          valuesToSubmit = encodeURLComponent(valuesToSubmit);
-          console.log("valuesToSubmit = " + valuesToSubmit);
+           if(order != null){
+             valuesToSubmit += "&";
+             valuesToSubmit += order;
+           }
+          //  alert(valuesToSubmit);
+
+          valuesToSubmit = encodeURIComponent(valuesToSubmit);
+          var aUrl = $(this).prop('action');
+          console.log("valuesToSubmit = " + valuesToSubmit + "aUrl : " + aUrl);
+
           $.ajax({
             type: "POST",
-            url: $(this).prop('action'),
+            url: aUrl,
             data: valuesToSubmit,
-            dataType: "JSON"
+            dataType: "html"
           }).success(function (json) {
             console.log(json);
-             alert(json);
           }).error(function (error) {
             console.log(error);
-            // alert(error);
           });
       });
     });
 
     $('.selectpicker').on('change', function() {
-      // <option value="1">不限</option>
-      // <option value="2">2 ~ 5k</option>
-      // <option value="3">5 ~ 10k</option>
-      // <option value="4">10 ~ 20k</option>
-      // <option value="5">20 ~ 30k</option>
-      // <option value="6">30k以上</option>
-      var myurl = "/jobs"
+      var myurl = "/jobs/search"
       var value = this.value;
-      if(1 != value){
-        if(2 == value){
-            myurl += "?order=by_salary_2k_5k";
-        }
-        else if(3 == value){
-          myurl += "?order=by_salary_5k_10k";
-        }
-        else if(4 == value){
-          myurl += "?order=by_salary_10k_20k";
-        }
-        else if(5 == value){
-          myurl += "?order=by_salary_20k_30k";
-        }
-        else if(6 == value){
-          myurl += "?order=by_salary_30kabove";
-        }
+      var valuesToSubmit = '';
+      var place =  localStorage.getItem('place');
+      var work_years =  localStorage.getItem('work_years');
+      var education =  localStorage.getItem('education');
+      var industry =  localStorage.getItem('industry');
+
+      if(parseInt(place) != -1){
+        valuesToSubmit += "&q[work_place_eq]="+place;
       }
-      window.open(myurl,'_self');
+      if(parseInt(work_years) != -1){
+        valuesToSubmit += "&q[work_years_eq]="+work_years;
+      }
+      if(parseInt(education) != -1){
+        valuesToSubmit += "&q[education_eq]="+education;
+      }
+      if(parseInt(industry) != -1){
+        valuesToSubmit += "&q[company_industry_eq]="+industry;
+      }
 
-      $.ajax(myurl,{
-      success: function(data) {
-         console.log("success " + data);
-          //  $("html").html(data);
-           var newDoc = document.open("text/html", "replace");
-           newDoc.write(data);
-           newDoc.close();
-      },
-      error: function() {
-         console.log('An error occurred');
-      }});
+       if(1 != value){
+         var order = null;
+         if(2 == value){
+             order = "order=by_min_salary";
+         }
+         else if(3 == value){
+             order = "order=by_max_salary";
+         }
+         if(order != null){
+           localStorage.setItem("order", order);
+           valuesToSubmit += "&";
+           valuesToSubmit += order;
+         }
 
+       }
+
+      valuesToSubmit = encodeURIComponent(valuesToSubmit);
+
+
+
+      $.ajax({
+        type: "POST",
+        url: myurl,
+        data: valuesToSubmit,
+        dataType: "html"
+      }).success(function (json) {
+        console.log(json);
+        eval(json);
+      }).error(function (error) {
+        console.log(error);
+      });
 
     })
 

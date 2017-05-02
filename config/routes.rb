@@ -4,7 +4,7 @@ Rails.application.routes.draw do
    resources  :jobs do
      resources :resumes
       collection do
-        match 'search' => 'job#search', via:[:get, :post], as: :search
+        match 'search' => 'jobs#search', via:[:get, :post], as: :search
       end
    end
 

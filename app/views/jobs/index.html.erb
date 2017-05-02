@@ -50,18 +50,15 @@
             <div class="order_inner_part">
               <span class="order_title">排序方式</span>
               <!-- <a class="order_item" id="default">默认</a> -->
-              <%= link_to("默认", jobs_path({:order => "by_default"}), class:"order_item")%>
+              <%= link_to("默认", jobs_path({:order => "by_default"}), class:"order_item", id:"order_default", remote:true)%>
               <!-- <a class="order_item" id="new">最新</a> -->
-              <%= link_to("最新", jobs_path, class:"order_item")%>
+              <%= link_to("最新", jobs_path, class:"order_item", id:"order_new", remote:true)%>
               <span class="order_item" >月薪</span>
               <div class="dropdown">
-                  <select class="selectpicker" id="salary_select">
-                    <option value="1">不限</option>
-                    <option value="2">2 ~ 5k</option>
-                    <option value="3">5 ~ 10k</option>
-                    <option value="4">10 ~ 20k</option>
-                    <option value="5">20 ~ 30k</option>
-                    <option value="6">30k以上</option>
+                  <select class="selectpicker" id="salary_select" data-remote="true">
+                    <option value="1">默认</option>
+                    <option value="2">月薪下限</option>
+                    <option value="3">月薪上限</option>
                   </select>
               </div>
             </div>
@@ -71,26 +68,7 @@
   </div>
 </div>
 
-
-  <table class="table">
-  <thead>
-
-    <th>job</th>
-    <th>description</th>
-    <th>salary</th>
-    <th>contact</th>
-    <th>date</th>
-  </thead>
-  <tbody>
-    <%= render :partial => "jobitem", :collection => @jobs , :as => :job  %>
-  </tbody>
-</table>
-
-<div class="row">
-
-  <div class="flickr_pagination">
-      <%= will_paginate @jobs, :container => false %>
-  </div>
+<div id="jobs_grid_parent">
+<%= render "jobitems" %>
 </div>
-
 </div>
