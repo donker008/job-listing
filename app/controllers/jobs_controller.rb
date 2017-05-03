@@ -34,8 +34,8 @@ class JobsController < ApplicationController
   end
 
   def create
-    flash[:warning] = "You cant create job!"
-    redirect_to jobs_path
+    # flash[:warning] = "You cant create job 2!"
+    # redirect_to jobs_path
   end
 
   def edit
