@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>JobListing</title>
+    <title>今日招聘</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -26,7 +26,8 @@
     <%= render "comm/footer" %>
 
     <script>
-    $(document).ready(function(){
+
+    function handleScrollTopEvent() {
       // Add smooth scrolling to all links in navbar + footer link
       $(".navbar a, footer a[href='#welcomepage']").on('click', function(event) {
 
@@ -50,194 +51,31 @@
           });
         } // End if
       });
-    });
+    }
 
-    $(document).ready(function(){
-      $(".filter_part a").on('click', function(event){
-          var id = $(this).parent().prop("id");
-          var type = parseInt($(this).prop("id"));
-          localStorage.setItem(id, type);
-          $(this).parent().find("a").removeClass("active");
-          $(this).addClass("active");
+    function updateItemState(objectid, value){
 
-      });
-      var path = window.location.pathname;
-      if(path == '/'){
-        $("#job_search").attr('data-remote', false);
-        $("#job_search").attr('action', '/jobs');
+      if(value != 1){
+        $(objectid).find("a").each(function (index) {
+          $(this).removeClass("active");
+          if($(this).prop("id") == value){
+            $(this).addClass("active");
+          }
+        });
       }
       else{
-        $("#job_search").attr('data-remote', true);
-      }
-      console.log("page path : " + path);
-
-      $(".filter_part a").on('click', function(event){
-
-          var value = $(this).value;
-          var needUseAjax = false;
-          var valuesToSubmit = '';
-          var ahref = $(this).attr("href");
-
-          //sort new , default
-          var linkid = ($(this).prop("id"));
-
-          if(linkid=='order_new'){
-            valuesToSubmit =  valuesToSubmit == null ? 'order=by_new':'&order=by_new';
-            localStorage.setItem("order", order);
-            needUseAjax = true;
-
-          }
-          else if(linkid == 'order_default'){
-            valuesToSubmit =  valuesToSubmit == null ? 'order=by_default':'&order=by_default';
-            localStorage.setItem("order", order);
-            needUseAjax = true;
-          }
-          console.log("valuesToSubmit" + valuesToSubmit + "href : " + href);
-
-          if(needUseAjax){
-
-            var myurl = "/jobs/search";
-            var place =  localStorage.getItem('place');
-            var work_years =  localStorage.getItem('work_years');
-            var education =  localStorage.getItem('education');
-            var industry =  localStorage.getItem('industry');
-
-            if(parseInt(place) != -1){
-              valuesToSubmit += "&q[work_place_eq]="+place;
-            }
-            if(parseInt(work_years) != -1){
-              valuesToSubmit += "&q[work_years_eq]="+work_years;
-            }
-            if(parseInt(education) != -1){
-              valuesToSubmit += "&q[education_eq]="+education;
-            }
-            if(parseInt(industry) != -1){
-              valuesToSubmit += "&q[company_industry_eq]="+industry;
-            }
-
-
-            valuesToSubmit = encodeURIComponent(valuesToSubmit);
-
-            console.log("linkid : " + linkid );
-
-            //will_page
-
-            if(valuesToSubmit != null){
-
-              $.ajax({
-                type: "POST",
-                url: myurl,
-                data: valuesToSubmit,
-                dataType: "html"
-              }).success(function (json) {
-                eval(json);
-              }).error(function (error) {
-                console.log(error);
-              });
-            }
-          }
-
-
-      });
-
-      $(document).on('click','.flickr_pagination a', {}, function(event){
-
-          var value = $(event.target).text()
-          var needUseAjax = false;
-          var valuesToSubmit = '';
-          var ahref = $(this).attr("href");
-
-          // alert(ahref + " value: " + value);
-
-          //will page
-          if(ahref.startsWith('/jobs/search?')){
-            needUseAjax = true;
-            if(value != null){
-              valuesToSubmit = "page="+value;
-            }
-          }
-
-          console.log("valuesToSubmit" + valuesToSubmit + " href : " + ahref);
-
-          if(needUseAjax){
-
-            var myurl = "/jobs/search";
-            var place =  localStorage.getItem('place');
-            var work_years =  localStorage.getItem('work_years');
-            var education =  localStorage.getItem('education');
-            var industry =  localStorage.getItem('industry');
-            var order = localStorage.getItem('order');
-
-            if(parseInt(place) != -1){
-              valuesToSubmit += "&q[work_place_eq]="+place;
-            }
-            if(parseInt(work_years) != -1){
-              valuesToSubmit += "&q[work_years_eq]="+work_years;
-            }
-            if(parseInt(education) != -1){
-              valuesToSubmit += "&q[education_eq]="+education;
-            }
-            if(parseInt(industry) != -1){
-              valuesToSubmit += "&q[company_industry_eq]="+industry;
-            }
-
-            if(order != null){
-              valuesToSubmit += "&";
-              valuesToSubmit += order;
-            }
-
-
-
-            valuesToSubmit = encodeURIComponent(valuesToSubmit);
-            //will_page
-            console.log("ahref : " + ahref + " valuesToSubmit:" + valuesToSubmit);
-            if(valuesToSubmit != null){
-
-              $.ajax({
-                type: "POST",
-                url: myurl,
-                data: valuesToSubmit,
-                dataType: "html"
-              }).success(function (json) {
-                eval(json);
-                console.log(json);
-              }).error(function (error) {
-                console.log(error);
-              });
-            }
-          }
-
-
-      });
-
-
-
-
-      function updateItemState(objectid, value){
-        if(value != 1){
-          $(objectid).find("a").each(function (index) {
-            $(this).removeClass("active");
-            if($(this).prop("id") == value){
-              $(this).addClass("active");
-              console.log("objectid: " + objectid +  " active" + $(this).toString() + " index : " + (index+1));
-            }
-          });
-        }
-        else{
-          $(objectid).find("a").first().addClass("active");
-          console.log("objectid: " + objectid +  " active" + $(this).toString());
-        }
-
+        $(objectid).find("a").first().addClass("active");
       }
 
-      // update select status
-      {
+    }
+
+    function updateAllFilterState() {
+
         var place =  localStorage.getItem('place');
         var work_years =  localStorage.getItem('work_years');
         var education =  localStorage.getItem('education');
         var industry =  localStorage.getItem('industry');
         var search = localStorage.getItem('search');
-
 
         updateItemState('#place', place);
         updateItemState('#work_years', work_years);
@@ -250,116 +88,250 @@
           $('#search-input').val(search).focus().blur();
         }
         console.log("place : " + place + " workyears: " + work_years + " education: " + education + " industry: " + industry + " search :" + search);
-      }
 
+    }
 
+    function  handleLinkClickEventFromFilterArea() {
 
-      $("#job_search").submit(function() {
-          var searchword = $(this).parent().find("#search-input").val();
-          localStorage.setItem("search", searchword);
-          var valuesToSubmit = $(this).serialize();
-          //utf8=✓&q[searchjob_cont]=&q[title_cont]=
-          valuesToSubmit = decodeURIComponent(valuesToSubmit);
-          var place =  localStorage.getItem('place');
-          var work_years =  localStorage.getItem('work_years');
-          var education =  localStorage.getItem('education');
-          var industry =  localStorage.getItem('industry');
-          var order = localStorage.getItem('order');
+      $(".filter_part a").on('click', function(event){
 
-          if(parseInt(place) != -1){
-            valuesToSubmit += "&q[work_place_eq]="+place;
+          var value = $(this).value;
+          var needUseAjax = false;
+          var valuesToSubmit = '';
+          var ahref = $(this).attr("href");
+          //sort new , default
+          var linkid = ($(this).prop("id"));
+          if(linkid=='order_new'){
+            order = "order=by_new";
+            localStorage.setItem("order", order);
+            needUseAjax = true;
           }
-          if(parseInt(work_years) != -1){
-            valuesToSubmit += "&q[work_years_eq]="+work_years;
-          }
-          if(parseInt(education) != -1){
-            valuesToSubmit += "&q[education_eq]="+education;
-          }
-          if(parseInt(industry) != -1){
-            valuesToSubmit += "&q[company_industry_eq]="+industry;
+          else if(linkid == 'order_default'){
+            order = "order=by_default";
+            localStorage.setItem("order", order);
+            needUseAjax = true;
           }
 
-           if(order != null){
-             valuesToSubmit += "&";
-             valuesToSubmit += order;
-           }
-          //  alert(valuesToSubmit);
+          if(needUseAjax){
 
-          valuesToSubmit = encodeURIComponent(valuesToSubmit);
-          var aUrl = $(this).prop('action');
-          console.log("valuesToSubmit = " + valuesToSubmit + "aUrl : " + aUrl);
+            var myurl = "/jobs";
+            valuesToSubmit += filterQueryStr();
+            valuesToSubmit = encodeURIComponent(valuesToSubmit);
 
-          $.ajax({
-            type: "POST",
-            url: aUrl,
-            data: valuesToSubmit,
-            dataType: "html"
-          }).success(function (json) {
-            console.log(json);
-          }).error(function (error) {
-            console.log(error);
-          });
+            console.log("valuesToSubmit" + valuesToSubmit + "myurl : " + myurl);
+
+            if(valuesToSubmit != null){
+
+              $.ajax({
+                type: "POST",
+                url: myurl,
+                data: valuesToSubmit,
+                dataType: "html"
+              }).success(function (json) {
+                console.log("success: " + json);
+                eval(json);
+              }).error(function (error) {
+                console.log("error: " + error);
+              });
+            }
+          }
       });
-    });
+    }
 
-    $('.selectpicker').on('change', function() {
-      var myurl = "/jobs/search"
-      var value = this.value;
+   function handleLinkClickEventFromPaginate() {
+
+     $(document).on('click','.flickr_pagination a', {}, function(event){
+
+         var value = $(event.target).text()
+         var needUseAjax = false;
+         var valuesToSubmit = '';
+         var href = $(this).attr("href");
+
+         //will page search job list or normal job list
+         if(href.startsWith('/jobs/search?') ||
+           href.startsWith('/jobs?')){
+           needUseAjax = true;
+           if(value != null){
+             valuesToSubmit = "page="+value;
+           }
+         }
+
+         console.log("valuesToSubmit" + valuesToSubmit + " href : " + href);
+
+         if(needUseAjax){
+
+           event.preventDefault();
+           event.stopImmediatePropagation();
+
+           var myurl = "/jobs/search";
+           if(href.startsWith('/jobs?')){
+              myurl = "/jobs";
+           }
+           valuesToSubmit += filterQueryStr();
+           valuesToSubmit = encodeURIComponent(valuesToSubmit);
+           //will_page
+           console.log("myurl : " + myurl + " valuesToSubmit:" + valuesToSubmit);
+
+           if(valuesToSubmit != null){
+
+             $.ajax({
+               type: "POST",
+               url: myurl,
+               data: valuesToSubmit,
+               dataType: "html"
+             }).success(function (json) {
+               console.log("success: " + json);
+               eval(json);
+             }).error(function (error) {
+               console.log("error: " + error);
+             });
+           }
+         }
+     });
+   }
+
+    function handleSearchFormSubmitEvent() {
+
+           $("#job_search").submit(function() {
+
+               var searchword = $(this).parent().find("#search-input").val();
+               localStorage.setItem("search", searchword);
+               var valuesToSubmit = $(this).serialize();
+               //utf8=✓&q[searchjob_cont]=&q[title_cont]=
+               valuesToSubmit = decodeURIComponent(valuesToSubmit);
+               valuesToSubmit += filterQueryStr();
+               valuesToSubmit = encodeURIComponent(valuesToSubmit);
+               var myUrl = $(this).prop('action');
+               localStorage.setItem('currentUrl', myUrl);
+
+               console.log("valuesToSubmit = " + valuesToSubmit + " myUrl : " + myUrl);
+               $.ajax({
+                 type: "POST",
+                 url: myUrl,
+                 data: valuesToSubmit,
+                 dataType: "html"
+               }).success(function (json) {
+                 console.log(json);
+               }).error(function (error) {
+                 console.log(error);
+               });
+           });
+     }
+
+    function filterQueryStr() {
+
       var valuesToSubmit = '';
       var place =  localStorage.getItem('place');
       var work_years =  localStorage.getItem('work_years');
       var education =  localStorage.getItem('education');
       var industry =  localStorage.getItem('industry');
+      var order =  localStorage.getItem('order');
 
-      if(parseInt(place) != -1){
+      if(parseInt(place) != 1){
         valuesToSubmit += "&q[work_place_eq]="+place;
       }
-      if(parseInt(work_years) != -1){
+      if(parseInt(work_years) != 1){
         valuesToSubmit += "&q[work_years_eq]="+work_years;
       }
-      if(parseInt(education) != -1){
+      if(parseInt(education) != 1){
         valuesToSubmit += "&q[education_eq]="+education;
       }
-      if(parseInt(industry) != -1){
+      if(parseInt(industry) != 1){
         valuesToSubmit += "&q[company_industry_eq]="+industry;
       }
+      if(order != null){
+        valuesToSubmit += "&";
+        valuesToSubmit += order;
+      }
+      return valuesToSubmit;
+    }
 
-       if(1 != value){
-         var order = null;
-         if(2 == value){
-             order = "order=by_min_salary";
-         }
-         else if(3 == value){
-             order = "order=by_max_salary";
-         }
-         if(order != null){
-           localStorage.setItem("order", order);
-           valuesToSubmit += "&";
-           valuesToSubmit += order;
-         }
+    function handleOrderBySalaryEvent() {
 
-       }
+        $('.selectpicker').on('change', function() {
 
-      valuesToSubmit = encodeURIComponent(valuesToSubmit);
+          var myurl = localStorage.getItem('currentUrl');
+          if(myurl == null){
+            myurl = '/jobs'
+          }
+          var value = this.value;
+          var valuesToSubmit = '';
 
+           if(1 != value){
+             var order = null;
+             if(2 == value){
+                 order = "order=by_min_salary";
+             }
+             else if(3 == value){
+                 order = "order=by_max_salary";
+             }
+             if(order != null){
+               localStorage.setItem("order", order);
+               valuesToSubmit += "&";
+               valuesToSubmit += order;
+             }
+           }
+          valuesToSubmit += filterQueryStr();
+          valuesToSubmit = encodeURIComponent(valuesToSubmit);
 
+          $.ajax({
+            type: "POST",
+            url: myurl,
+            data: valuesToSubmit,
+            dataType: "html"
+          }).success(function (json) {
+            console.log(json);
+            eval(json);
+          }).error(function (error) {
+            console.log(error);
+          });
 
-      $.ajax({
-        type: "POST",
-        url: myurl,
-        data: valuesToSubmit,
-        dataType: "html"
-      }).success(function (json) {
-        console.log(json);
-        eval(json);
-      }).error(function (error) {
-        console.log(error);
+        });
+    }
+
+    function turnOnRemoteDataForSearchFormIfNeeded() {
+      var path = window.location.pathname;
+      if(path == '/'){
+        $("#job_search").attr('data-remote', false);
+        $("#job_search").attr('action', '/jobs');
+      }
+      else{
+        $("#job_search").attr('data-remote', true);
+      }
+      console.log("page path : " + path);
+    }
+
+    function updateLinkStateForFilterArea() {
+
+      $(".filter_part a").on('click', function(event){
+          var id = $(this).parent().prop("id");
+          var type = parseInt($(this).prop("id"));
+          localStorage.setItem(id, type);
+          $(this).parent().find("a").removeClass("active");
+          $(this).addClass("active");
       });
+    }
 
-    })
+    $(document).ready(function(){
 
+          handleScrollTopEvent();
 
-    </script>
+          updateLinkStateForFilterArea();
+          //turn on remote function for search from only for job controller
+          turnOnRemoteDataForSearchFormIfNeeded();
+          // update select status
+          updateAllFilterState();
+          // hook order by new or default event
+          handleLinkClickEventFromFilterArea();
+          // hook paginate event
+          handleLinkClickEventFromPaginate();
+          //hook submit event
+          handleSearchFormSubmitEvent();
+          //hook order by salary vent
+          handleOrderBySalaryEvent();
+        });
+
+</script>
 
 
   </body>
