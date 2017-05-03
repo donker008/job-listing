@@ -1,7 +1,30 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+# ruby encoding: utf-8
+Workplace.create("name"=>"不限")
+Workplace.create("name"=>"北京")
+Workplace.create("name"=>"上海")
+Workplace.create("name"=>"深圳")
+Workplace.create("name"=>"广州")
+Workplace.create("name"=>"杭州")
+Workplace.create("name"=>"成都")
+Workplace.create("name"=>"南京")
+Workplace.create("name"=>"武汉")
+Workplace.create("name"=>"西安")
+Workplace.create("name"=>"厦门")
+Workplace.create("name"=>"长沙")
+Workplace.create("name"=>"苏州")
+Workplace.create("name"=>"天津")
+Industry.create("name"=>"不限")
+Industry.create("name"=>"移动互联网")
+Industry.create("name"=>"电子商务")
+Industry.create("name"=>"金融")
+Industry.create("name"=>"企业服务")
+Industry.create("name"=>"教育")
+Industry.create("name"=>"文化娱乐")
+Industry.create("name"=>"游戏")
+Industry.create("name"=>"O2O")
+Industry.create("name"=>"硬件")
+Industry.create("name"=>"社交网络")
+Industry.create("name"=>"旅游")
+Industry.create("name"=>"医疗健康")
+Industry.create("name"=>"生活服务")
+Industry.create("name"=>"信息安全")
