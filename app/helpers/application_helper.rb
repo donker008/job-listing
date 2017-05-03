@@ -25,4 +25,8 @@ module ApplicationHelper
     end
   end
 
+  def is_home_controller
+     params[:controller].start_with?('helloworld')
+  end
+
 end

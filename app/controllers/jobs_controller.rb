@@ -62,8 +62,8 @@ class JobsController < ApplicationController
       @jobs = @q.result(distinct: true).includes(:company).order(salaryMax: :DESC).page(params[:page])
     end
     respond_to do |format|
-      # format.html
       format.js
+      format.html
     end
   end
 
