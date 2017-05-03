@@ -5,7 +5,7 @@ class CreateCompanies < ActiveRecord::Migration[5.0]
       t.string :description
       t.string :brand_icon
       t.string :industry
-      t.float :stars
+      t.integer :stars, default: 0;
       t.timestamps
     end
   end

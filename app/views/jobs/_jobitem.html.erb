@@ -1,13 +1,85 @@
 
-<tr>
-<td>
-<%= render_job_state(job) %>
-<%= link_to(job.title,  job_path(job))%>
-</td>
+<div class="row jobcell">
+<div class="jobinfo_left col-sm-7 col-md-7">
+  <h4><%= link_to(job.title + '['+job.work_place+']',  job_path(job))%></h4>
+  <div class="row jobinfo_left_salary">
 
-<td><%= simple_format(job.description) %></td>
-<td> <%=job.salaryMin%> - <%=job.salaryMax%></td>
-<td><%= job.contact %></td>
-<td><%= job.created_at.strftime("%Y/%m/%d") %></td>
+    <div class="salary_part col-sm-7 col-md-7">
+      <span class="salary"><%=job.salaryMin%> - <%=job.salaryMax%></span>
+      <span class="job_other">经验<%= job.work_years %>/<%= job.education %></span>
+    </div>
+    <div class="comment_icons col-sm-5 col-md-5">
+        <div class="row">
+            <div class="sns_icon_info text-center">
+                <img src="/images/icon_star.png"/> <br />
+                <span><%= star_count(job) %></span>
+            </div>
+            <div class="sns_icon_info text-center">
+                <img src="/images/icon_message.png"/> <br />
+                <% if job.comments.blank? %>
+                <span>0</span>
+                <% else %>
+                <span><%= job.comments.size %></span>
+                <% end %>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+<div class=" jobinfo_right col-sm-5 col-md-5">
+  <div class="row">
+    <div class="company col-sm-8 col-md-8">
+      <% unless job.company.blank? %>
+        <h4><%= job.company.name %></h4>
+        <% if job.company.stars == 0 %>
+            <% 5.times do |i| %>
+              <img src="/images/icon_star_red.png"/>
+            <% end %>
+        <% elsif job.company.stars == 1%>
+            <% 1.times do |i| %>
+            <img src="/images/icon_star_red.png"/>
+            <% end %>
+            <% 4.times do |i| %>
+            <img src="/images/icon_star.png"/>
+            <% end %>
+        <% elsif job.company.stars == 2%>
+            <% 2.times do |i| %>
+            <img src="/images/icon_star_red.png"/>
+            <% end %>
+            <% 3.times do |i| %>
+            <img src="/images/icon_star.png"/>
+            <% end %>
+        <% elsif job.company.stars == 3%>
+            <% 3.times do |i| %>
+            <img src="/images/icon_star_red.png"/>
+            <% end %>
+            <% 2.times do |i| %>
+            <img src="/images/icon_star.png"/>
+            <% end %>
+        <% elsif job.company.stars == 4%>
+            <% 4.times do |i| %>
+            <img src="/images/icon_star_red.png"/>
+            <% end %>
+            <% 1.times do |i| %>
+            <img src="/images/icon_star.png"/>
+            <% end %>
+        <% elsif job.company.stars == 5%>
+          <% 5.times do |i| %>
+          <img src="/images/icon_star_red.png"/>
+          <% end %>
+        <% end %>
 
-</tr>
+      <% else %>
+
+        <h4><%= link_to('未知',"", class:"company_title") %></h4>
+        <% 5.times do |i| %>
+        <img src="/images/icon_star_red.png"/>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="col-sm-4 col-md-4 release_date">
+      <span><%= job.created_at.strftime("%Y/%m/%d")%>发布</span>
+    </div>
+  </div>
+</div>
+</div>

@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20170501065207) do
   create_table "comments", force: :cascade do |t|
     t.text     "content"
     t.integer  "user_id"
+    t.integer  "job_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -24,9 +25,9 @@ ActiveRecord::Schema.define(version: 20170501065207) do
     t.string   "description"
     t.string   "brand_icon"
     t.string   "industry"
-    t.float    "stars"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "stars",       default: 0
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "industries", force: :cascade do |t|
@@ -42,17 +43,17 @@ ActiveRecord::Schema.define(version: 20170501065207) do
     t.integer  "salaryMin"
     t.text     "contact"
     t.boolean  "hide"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "user_id"
-    t.string   "work_place"
+    t.string   "work_place",  default: "不限"
     t.integer  "work_years",  default: -1
-    t.string   "education"
-    t.integer  "star1"
-    t.integer  "star2"
-    t.integer  "star3"
-    t.integer  "star4"
-    t.integer  "star5"
+    t.string   "education",   default: "不限"
+    t.integer  "star1",       default: 0
+    t.integer  "star2",       default: 0
+    t.integer  "star3",       default: 0
+    t.integer  "star4",       default: 0
+    t.integer  "star5",       default: 0
     t.integer  "company_id"
   end
 

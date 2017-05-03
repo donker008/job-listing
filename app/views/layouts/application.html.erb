@@ -116,7 +116,7 @@
 
             var myurl = "/jobs";
             valuesToSubmit += filterQueryStr();
-            valuesToSubmit = encodeURIComponent(valuesToSubmit);
+            var encodeValues = encodeURIComponent(valuesToSubmit);
 
             console.log("valuesToSubmit" + valuesToSubmit + "myurl : " + myurl);
 
@@ -125,13 +125,13 @@
               $.ajax({
                 type: "POST",
                 url: myurl,
-                data: valuesToSubmit,
+                data: encodeValues,
                 dataType: "html"
               }).success(function (json) {
-                console.log("success: " + json);
+                console.log("myurl: " + myurl + "\n" + "valuesToSubmit : " + valuesToSubmit + "\n" +  "success: " + json);
                 eval(json);
               }).error(function (error) {
-                console.log("error: " + error);
+                console.log("myurl: " + myurl + "\n" + "valuesToSubmit : " + valuesToSubmit + "\n" +  "error: " + error);
               });
             }
           }
@@ -167,9 +167,9 @@
            if(href.startsWith('/jobs?')){
               myurl = "/jobs";
            }
+           myurl = window.location.origin + myurl;
            valuesToSubmit += filterQueryStr();
-           valuesToSubmit = encodeURIComponent(valuesToSubmit);
-           //will_page
+           var encodeValues =  encodeURIComponent(valuesToSubmit);
            console.log("myurl : " + myurl + " valuesToSubmit:" + valuesToSubmit);
 
            if(valuesToSubmit != null){
@@ -177,13 +177,13 @@
              $.ajax({
                type: "POST",
                url: myurl,
-               data: valuesToSubmit,
+               data: encodeValues,
                dataType: "html"
              }).success(function (json) {
-               console.log("success: " + json);
+               console.log("myurl: " + myurl + "\n" + "valuesToSubmit : " + valuesToSubmit + "\n" +  "success: " + json);
                eval(json);
              }).error(function (error) {
-               console.log("error: " + error);
+               console.log("myurl: " + myurl + "\n" + "valuesToSubmit : " + valuesToSubmit + "\n" +  "error: " + error);
              });
            }
          }
@@ -200,20 +200,20 @@
                //utf8=✓&q[searchjob_cont]=&q[title_cont]=
                valuesToSubmit = decodeURIComponent(valuesToSubmit);
                valuesToSubmit += filterQueryStr();
-               valuesToSubmit = encodeURIComponent(valuesToSubmit);
-               var myUrl = $(this).prop('action');
-               localStorage.setItem('currentUrl', myUrl);
+               var encodeValues = encodeURIComponent(valuesToSubmit);
+               var myurl = $(this).prop('action');
+               localStorage.setItem('currentUrl', myurl);
+              //  myurl = window.location.origin + myurl;
 
-               console.log("valuesToSubmit = " + valuesToSubmit + " myUrl : " + myUrl);
                $.ajax({
                  type: "POST",
-                 url: myUrl,
-                 data: valuesToSubmit,
+                 url: myurl,
+                 data: encodeValues,
                  dataType: "html"
                }).success(function (json) {
-                 console.log(json);
+                 console.log("myurl: " + myurl + "\n" + "valuesToSubmit : " + valuesToSubmit + "\n" +  "success: " + json);
                }).error(function (error) {
-                 console.log(error);
+                 console.log("myurl: " + myurl + "\n" + "valuesToSubmit : " + valuesToSubmit + "\n" +  "error: " + error);
                });
            });
      }
@@ -254,6 +254,10 @@
           if(myurl == null){
             myurl = '/jobs'
           }
+          if(!myurl.startsWith('http')){
+            myurl = window.location.origin + myurl;  
+          }
+
           var value = this.value;
           var valuesToSubmit = '';
 
@@ -272,18 +276,18 @@
              }
            }
           valuesToSubmit += filterQueryStr();
-          valuesToSubmit = encodeURIComponent(valuesToSubmit);
+          var encodeValues = encodeURIComponent(valuesToSubmit);
 
           $.ajax({
             type: "POST",
             url: myurl,
-            data: valuesToSubmit,
+            data: encodeValues,
             dataType: "html"
           }).success(function (json) {
-            console.log(json);
+            console.log("myurl: " + myurl + "\n" + "valuesToSubmit : " + valuesToSubmit + "\n" +  "success: " + json);
             eval(json);
           }).error(function (error) {
-            console.log(error);
+            console.log("myurl: " + myurl + "\n" + "valuesToSubmit : " + valuesToSubmit + "\n" +  "error: " + error);
           });
 
         });

@@ -16,4 +16,7 @@ module JobsHelper
      end
   end
 
+ def star_count(job)
+   count = job.star1 + job.star2 + job.star3 + job.star4 + job.star5;
+ end
 end
