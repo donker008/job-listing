@@ -17,24 +17,12 @@ class Admin::JobsController < ApplicationController
       flash[:warning] = "发布工作岗位前，请先提交公司信息"
       redirect_to new_company_path
     end
+    @academics = Academic.all
   end
 
   def create
-    #
-    # render plain: params.inspect
-    # return
 
     @job = Job.new(job_params)
-    # if @job.salaryMin.to_i <= 0
-    #   flash[:warning] = "Salary can't less than 0."
-    #   render :new
-    #   return
-    # elsif @job.salaryMax.to_i < @job.salaryMin.to_i
-    #   flash[:warning] = "Salary Max must be greater than Salary Min"
-    #   render :new
-    #   return
-    # end
-
     @job.user_id = current_user.id
     company = Company.where(:user_id =>current_user.id).limit(1).first
     if company.blank?
@@ -49,7 +37,7 @@ class Admin::JobsController < ApplicationController
       flash[:alert] = "Failed to create job. Error:" + @job.errors.full_messages.to_s
       render :new
     end
-    # redirect_to admin_jobs_path
+    # redirect_to admin_jobs_patAcademicsh
   end
 
   def edit
@@ -58,6 +46,7 @@ class Admin::JobsController < ApplicationController
       flash[:alert] = "Job don't exist"
       redirect_to admin_jobs_path
     end
+    @academics = Academic.all
   end
 
   def update
@@ -78,6 +67,7 @@ class Admin::JobsController < ApplicationController
     if @job.hide
       redirect_to admin_jobs_path
     end
+    @industries = Industry.all;
   end
 
 
@@ -132,6 +122,10 @@ class Admin::JobsController < ApplicationController
       flash[:warning] = "Failed to save job."
     end
     redirect_to admin_jobs_path
+  end
+
+  def user_resumes
+    @resumes = Resume.where(:user_id => current_user.id).all
   end
 
   def job_params

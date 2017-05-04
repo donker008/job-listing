@@ -26,6 +26,7 @@ class JobsController < ApplicationController
     if @job.hide
       redirect_to jobs_path
     end
+    @industries = Industry.all
   end
 
   def new

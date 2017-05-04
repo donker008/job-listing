@@ -1,14 +1,12 @@
 <div class="container-fluid">
-<h2 class="text-center"></h2>
-
-<%= simple_form_for [@job, @resume] do |f|%>
-
-<div class="group">
-<%= f.input :content %>
-<%= f.input :attatchment%>
-<%= f.submit "save", class:"btn btn-primary" %>
+<div class="resume_container">
+  <h2 class="text-center">投递简历</h2>
+  <%= simple_form_for [@job, @resume] do |f|%>
+  <div class="group">
+  <%= f.input :content, label: "简要自我介绍:" %>
+  <%= f.input :attatchment, label: "简历附近(pdf格式)"%>
+  <%= f.submit "上传简历", class:"btn_upload_resume btn btn-lg btn-primary" %>
+  </div>
+  <% end %>
 </div>
-
-<% end %>
-
 </div>

@@ -36,6 +36,11 @@ class CompaniesController < ApplicationController
       @industries = Industry.all
   end
 
+  def show
+      @company = Company.find(params[:id])
+      @industries = Industry.all
+  end
+
   def update
     @company = Company.find(params[:id])
     if @company.update(company_params)

@@ -3,8 +3,8 @@
   <table class="table">
     <thead>
       <td>#</td>
-      <td>content</td>
-      <td>resume</td>
+      <td>个人简介</td>
+      <td>简历</td>
     </thead>
     <tbody>
 
@@ -17,8 +17,8 @@
           <%= simple_format(resume.content) %>
         </td>
         <td>
-          <%= link_to("Download", resume.attatchment_url,  class: "btn btn-primary")%>
-          <%= link_to("Delete", job_resume_path(resume.job, resume), method: :delete, data:{confrim:"Are you sure to delete your resume?"},  class: "btn btn-primary")%>
+          <%= link_to("下载简历", resume.attatchment_url,  class: "btn_resume btn btn-primary")%>
+          <%= link_to("删除", job_resume_path(resume.job, resume), method: :delete, data:{confrim:"Are you sure to delete your resume?"},  class: "btn btn-danger")%>
         </td>
       </tr>
       <% end %>

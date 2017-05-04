@@ -122,13 +122,18 @@
 }
 
 .jobinfo_left > h4 > a{
-    font-size: 36px;
+    font-size: 20px;
     color: #00c6b6;
     margin: 20px;
 }
 
+.company > h4 > a {
+  font-size: 20px;
+  color: #00c6b6;
+}
+
 .jobcell .salary{
-  font-size: 32px;
+  font-size: 18px;
   color: #ce716e;
   margin-left: 20px;
 }
@@ -175,4 +180,8 @@
 
 .new_job{
   margin-bottom: 100px;
+}
+
+#job_header{
+  margin-top: 20px;
 }

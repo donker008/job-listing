@@ -8,7 +8,8 @@ Rails.application.routes.draw do
       end
    end
 
-   resources :companies 
+
+   resources :companies
   # namespace :admin do
   #   resources :jobs
   # end
@@ -23,6 +24,7 @@ Rails.application.routes.draw do
       post :publish
       get :resumes
     end
+     resources :resumes
   end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

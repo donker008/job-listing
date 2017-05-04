@@ -11,10 +11,16 @@
   font-weight: 200;
   margin: 30px 100px 50px 50px;
 }
+.udpate_title{
+  margin-top: 50px;
+  margin-left: 50px;
+  text-align: left
+}
 
 .company_icon{
   width: 60px;
   height: auto;
+  margin-left: 15px;
 }
 
 .company_detail  h4{
@@ -29,4 +35,13 @@
 
 .company_detail a {
   margin: 30px 0 10px 10px;
+}
+
+.company_detail .company_text_title{
+  font-size: 15px;
+}
+
+.company_detail .company_text_detail{
+  font-size: 14px;
+  margin-left: 15px
 }

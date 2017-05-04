@@ -5,3 +5,108 @@
 .admin_joblist_content{
   margin-top: 15px;
 }
+
+th{
+  background: #f1f1f1;
+  color: gray;
+  font-size: 20px;
+  font-weight: 300;
+}
+
+td{
+  font-size: 14px;
+  font-weight: 100;
+}
+.btn_new_job{
+  background: #00c5b6 !important;
+  border: none !important;
+}
+
+.btn_release_job{
+  padding-left: 18px !important;
+  padding-right: 18px !important;
+}
+
+.btn_menu{
+  background: #00c5b6 !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+.new_job_title{
+  font-size: 20px;
+  font-weight: 400;
+  color: #00c6b6
+}
+
+.job_date{
+  font-weight: 100;
+  color: gray;
+}
+
+.job_simple_info{
+  font-size: 10px;
+  font-weight: 200;
+  color: gray;
+}
+.job_salary{
+  color: #d6706e;
+  font-size: 15px;
+  font-weight: 200;
+}
+.job_information{
+  color: black;
+  font-weight: 200;
+  margin-bottom: 100px;
+}
+
+.job_header{
+  margin-top: 30px;
+}
+.btn_resume{
+  background: #00c5b6 !important;
+  text-align: center !important;
+  border: none !important;
+}
+
+.job_company img{
+  width: 60px;
+  height: auto;
+  margin: 5px 0 15px 0px;
+}
+
+#job_company{
+  background: #f1f1f1;
+  margin-right: 0px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+#job_header{
+  background: #f1f1f1;
+  box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.company_info_right {
+    margin: 10px;
+    font-size: 12px;
+    font-weight: 100;
+    text-align: left;
+}
+
+.company_info_right > a{
+  color: #00c6b6
+}
+
+.job_company div{
+  margin:10px;
+}
+
+.job_information{
+    padding: 20px
+}
+
+.tab_cell_job{
+  width: 20%;
+}

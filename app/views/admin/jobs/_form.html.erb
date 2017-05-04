@@ -5,7 +5,7 @@
       <%= f.input :description, input_html: {class: "from-control"}, label: 'Job description' %>
       <%= f.input :work_place, input_html: {class: "from-control"} , label: '工作地点' %>
       <%= f.input :work_years, input_html: {class: "from-control"} , label: '工作经验' %>
-      <%= f.input :education, input_html: {class: "from-control"} , label: '学历要求' %>
+      <%= f.input :education, input_html: {class: "from-control"} , label: '学历要求', collection:@academics, prompt:"选择学历" %>
       <%= f.input :salaryMin, input_html: {class: "from-control"} , label: '薪资下限' %>
       <%= f.input :salaryMax, input_html: {class: "from-control"}, label: "薪资上限" %>
       <%= f.input :contact, input_html: {class: "from-control"}, label: 'Email'%>

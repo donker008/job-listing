@@ -1,17 +1,37 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-10">
-      <h1> <%= @job.title %> </h1>
-      <br />
+<div class="container-fluid ">
+<div class="row" id="job_header">
+  <div class="job_header">
+    <div class="col-sm-10 col-md-10">
+      <span class="new_job_title"><%= @job.title %></span> <span class="job_date"><%= @job.created_at.strftime("%m/%d") %>发布</span>
       <p>
-      <%= simple_format(@job.description) %>
+        <span class="job_salaray"><%= @job.salaryMin %> - <%= @job.salaryMax %></span>
+        <span class="job_simple_info">/<%= @job.work_place %>/经验<%= @job.work_years %>年/<%= @job.education %></span>
       </p>
+    </div>
+    <div class="col-sm-2 col-md-2">
+      <%= link_to("投个简历",new_job_resume_path(@job), class:"btn btn-primary btn_resume") %>
+    </div>
+  </div>
+</div>
+<div class="row ">
+  <div class="job_body">
+    <div class="job_information col-sm-10 col-md-10">
+      <p>
+        <%= simple_format(@job.description) %>
+      </p>
+    </div>
+    <div class="job_company col-sm-2 col-md-2" id="job_company">
+      <div class="row">
+
+        <img src="<%= @job.company.brand_icon %>"/><br />
+        <i class="fa fa-building-o" aria-hidden="true"></i><span class="company_info_right"><%= link_to(@job.company.name, company_path(@job.company))%></span>
+      </div>
+      <div class="row">
+        <i class="fa fa-industry" aria-hidden="true"></i><span class="company_info_right"><%= @industries[@job.company.industry.to_i-1].name  %></span>
+      </div>
 
     </div>
-    <% if !isUserDashBoard %>
-    <div class="col-md-1 col-md-offset-9 center-block">
-      <%= link_to("View Resumes (" + @job.resumes.length.to_s + ")", admin_job_resumes_path(@job), class:"btn btn-primary")%>
-    </div>
-    <% end %>
   </div>
+
+</div>
 </div>

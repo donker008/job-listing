@@ -10,28 +10,33 @@
      <div class="col-sm-2">
        <h6>公司名: </h6>
      </div>
-     <div class="sol-sm-7 text-left">
+     <div class="sol-sm-10 text-left company_text_title">
        <%= @company.name %>
+     </div>
+   </div>
+
+   <div class="row">
+     <div class="col-sm-2">
+       <h6>公司行业: </h6>
+     </div>
+     <div class="sol-sm-10 text-left company_text_title">
+       <%= @industries[@company.industry.to_i-1].name  %>
      </div>
    </div>
    <div class="row">
      <div class="col-sm-2">
        <h6>公司简介: </h6>
      </div>
-     <div class="sol-sm-8 text-left">
-       <%= @company.description %>
+   </div>
+   <div class="row">
+     <div class="sol-sm-10 text-left company_text_detail">
+       <%= simple_format(@company.description) %>
      </div>
    </div>
    <div class="row">
-     <div class="col-sm-2">
-       <h6>公司行业: </h6>
-     </div>
-     <div class="sol-sm-8 text-left">
-       <%= @industries[@company.industry.to_i-1].name  %>
-     </div>
-   </div>
-   <div class="row">
-     <%= link_to("修改", edit_company_path(@company), class:"btn btn-primary")%>
+     <% if false == current_user.blank? && current_user.id == @company.user_id %>
+      <%= link_to("修改", edit_company_path(@company), class:"btn btn-primary")%>
+      <% end %>
    </div>
 </div>
 

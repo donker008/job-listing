@@ -25,11 +25,16 @@
           <ul class="dropdown-menu">
             <% if current_user && current_user.is_admin? %>
             <li>
-              <%= link_to("Admin", admin_jobs_path)%>
+              <%= link_to("岗位管理", admin_jobs_path) %>
+              <%= link_to("公司信息", companies_path) %>
+            </li>
+            <% else %>
+            <li>
+              <%= link_to("我的岗位", admin_resumes_path)%>
             </li>
             <% end %>
             <li>
-              <%= link_to("Exit", destroy_user_session_path, method: :delete)%>
+              <%= link_to("退出", destroy_user_session_path, method: :delete)%>
             </li>
           </ul>
         </li>

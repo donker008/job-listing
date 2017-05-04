@@ -1,0 +1,7 @@
+
+<td>#</td>
+<td><%= link_to(resume.job.title, job_path(resume.job) , class:"normal_link") %></td>
+<td><%= link_to(resume.job.company.name, company_path(resume.job.company),class:"normal_link") %></td>
+<td>
+  <%= link_to("下载", resume.attatchment_url,  class: "btn_resume btn btn-primary")%>
+</td>

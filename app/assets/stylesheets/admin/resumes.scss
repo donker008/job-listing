@@ -1,0 +1,27 @@
+// Place all the styles related to the admin/resumes controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.user_resumes{
+  margin-top: 20px;
+}
+
+.btn_my_job{
+  margin-top: 20px;
+  border: none !important;
+  background:#00c6b6 !important;
+  border-radius: 0 !important;
+  width: 100%;
+}
+.my_job_left{
+  background: #f1f1f1;
+  margin-bottom: 50px;
+  margin-top: 20px;
+  text-align: center;
+  border-radius: 4px;
+  height: 200px;
+}
+
+.user_resumes  .normal_link{
+  color: #00c6b6
+}

@@ -1,0 +1,20 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="my_job_left col-sm-2 col-md-2">
+      <a class="btn_my_job btn btn-lg btn-primary">我的岗位</a>
+    </div>
+    <div class="user_resumes col-sm-10 col-md-10">
+      <table class="table">
+        <thead>
+          <th>#</th>
+          <th>岗位</th>
+          <th>公司</th>
+          <th>简历</th>
+        </thead>
+        <tbody>
+          <%= render :partial => "resume", :collection => @resumes, as: :resume %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
