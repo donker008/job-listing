@@ -12,6 +12,10 @@ class Admin::JobsController < ApplicationController
 
   def new
     @job = Job.new
+    @company = Company.find_by_id(current_user.id)
+    if @company.blank?
+      @company = Company.new
+    end
   end
 
   def create
@@ -30,12 +34,14 @@ class Admin::JobsController < ApplicationController
     #   return
     # end
 
-    @job.user = current_user
+    @job.user_id = current_user.id
+    company = Company.find(@job.user_id)
+    @job.company_id = company.id
     if @job.save
       flash[:notice] = "Create job successful."
       redirect_to admin_jobs_path
     else
-      flash[:alert] = "Failed to create job."
+      flash[:alert] = "Failed to create job. Error:" + @job.errors.full_messages.to_s
       render :new
     end
     # redirect_to admin_jobs_path
