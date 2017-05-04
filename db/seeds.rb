@@ -1,4 +1,3 @@
-# ruby encoding: utf-8
 Workplace.create("name"=>"不限")
 Workplace.create("name"=>"北京")
 Workplace.create("name"=>"上海")
@@ -28,3 +27,8 @@ Industry.create("name"=>"旅游")
 Industry.create("name"=>"医疗健康")
 Industry.create("name"=>"生活服务")
 Industry.create("name"=>"信息安全")
+Academic.create("name"=>"不限,")
+Academic.create("name"=>"大专,")
+Academic.create("name"=>"本科,")
+Academic.create("name"=>"硕士,")
+Academic.create("name"=>"博士")

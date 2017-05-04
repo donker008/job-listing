@@ -8,5 +8,10 @@ namespace :export do
   Industry.order(:id).all.each do |place|
        puts "Industry.create(#{place.serializable_hash.delete_if {|key, value| ['created_at', 'updated_at', 'id'].include?(key)}.to_s.gsub(/[{}]/,'')})"
   end
+
+  Academic.order(:id).all.each do |a|
+    puts "Academic.create(#{a.serializable_hash.delete_if {|key, value| ['created_at', 'updated_at', 'id'].include?(key)}.to_s.gsub(/[{}]/,'')})"
+  end
+
  end
 end
