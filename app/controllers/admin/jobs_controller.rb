@@ -12,9 +12,10 @@ class Admin::JobsController < ApplicationController
 
   def new
     @job = Job.new
-    @company = Company.find_by_id(current_user.id)
+    @company = Company.where(user_id: current_user.id).limit(1).first
     if @company.blank?
-      @company = Company.new
+      flash[:warning] = "发布工作岗位前，请先提交公司信息"
+      redirect_to new_company_path
     end
   end
 
@@ -35,7 +36,11 @@ class Admin::JobsController < ApplicationController
     # end
 
     @job.user_id = current_user.id
-    company = Company.find(@job.user_id)
+    company = Company.where(:user_id =>current_user.id).limit(1).first
+    if company.blank?
+      flash[:warning] = "请先创建公司信息"
+      redirect_to new_company_path
+    end
     @job.company_id = company.id
     if @job.save
       flash[:notice] = "Create job successful."

@@ -1,0 +1,10 @@
+
+<%= simple_form_for @company do |f| %>
+   <div class="company_form">
+      <%= f.input :name , label: '公司名称:'%>
+      <%= f.input :description , label: "公司简介:"%>
+      <%= f.input :brand_icon, label: "公司图标" %>
+      <%= f.input :industry, collection:@industries, prompt: "选择行业" %>
+      <%= f.submit "创建", class:"btn btn-lg btn-danger", data:{disable_width: "创建中..."} %>
+   </div>
+<% end %>

@@ -1,3 +1,32 @@
 // Place all the styles related to the companies controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.company_form{
+  margin: 50px;
+
+}
+.company_detail{
+  font-size: 20px;
+  font-weight: 200;
+  margin: 30px 100px 50px 50px;
+}
+
+.company_icon{
+  width: 60px;
+  height: auto;
+}
+
+.company_detail  h4{
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.company_detail  h6{
+  font-size: 14px;
+  font-weight: 200;
+}
+
+.company_detail a {
+  margin: 30px 0 10px 10px;
+}

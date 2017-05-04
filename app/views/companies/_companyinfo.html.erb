@@ -1,0 +1,38 @@
+<div class="container-fluid ">
+
+<div class="company_detail">
+  <h4>公司信息</h4>
+  <div class="row">
+    <img class="company_icon" src="<%= @company.brand_icon %>"/>
+  </div>
+   <div class="row">
+
+     <div class="col-sm-2">
+       <h6>公司名: </h6>
+     </div>
+     <div class="sol-sm-7 text-left">
+       <%= @company.name %>
+     </div>
+   </div>
+   <div class="row">
+     <div class="col-sm-2">
+       <h6>公司简介: </h6>
+     </div>
+     <div class="sol-sm-8 text-left">
+       <%= @company.description %>
+     </div>
+   </div>
+   <div class="row">
+     <div class="col-sm-2">
+       <h6>公司行业: </h6>
+     </div>
+     <div class="sol-sm-8 text-left">
+       <%= @industries[@company.industry.to_i-1].name  %>
+     </div>
+   </div>
+   <div class="row">
+     <%= link_to("修改", edit_company_path(@company), class:"btn btn-primary")%>
+   </div>
+</div>
+
+</div>
