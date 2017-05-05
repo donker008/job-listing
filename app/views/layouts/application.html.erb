@@ -315,7 +315,13 @@
           var type = parseInt($(this).prop("id"));
           localStorage.setItem(id, type);
           $(this).parent().find("a").removeClass("active");
+
+          if('more_place' == id || 'more_industry' == id){
+               $(this).parent().parent().find("a").removeClass("active");
+          }
           $(this).addClass("active");
+
+          console.log("updateLinkStateForFilterArea: " + id + " type: " + type);
       });
     }
 
@@ -362,7 +368,7 @@
 
     function animateFlipY(flip, element){
       $({deg: 0}).animate({deg: flip}, {
-        duration: 200,
+        duration: 100,
         step: function(now){
             element.flipy(now)
         }
@@ -380,11 +386,37 @@
         flipPlace = flipPlace == -1? 1 :-1;
         animateFlipY(flipPlace, $('#place .fa-sort-desc'));
       });
-      
+
       $("#btn-more-industry").click(function functionName() {
         $('#more_industry').fadeToggle();
         flipIndustry = flipIndustry == -1 ? 1: -1;
         animateFlipY(flipPlace, $('#industry .fa-sort-desc'));
+      });
+    }
+
+    function animateFilterPanelWhenHeightChanged() {
+
+      var start_height = $('.li_normal_filter').height() + 100;
+
+      console.log('li_normal_filter start_height : ' + start_height);
+      $("#btn-more-place").click(function functionName() {
+         $place = $('#more_place');
+         $filter_option = $('.li_normal_filter');
+         if($place.is(':visible')){
+             $place.fadeToggle('slow', function() {
+             $filter_option.animate({height:start_height});
+             flipPlace = flipPlace == -1? 1 :-1;
+             animateFlipY(flipPlace, $('#place .fa-sort-desc'));
+           })
+         }
+         else{
+           console.log('$place.height() : ' + $place.outerHeight());
+           $filter_option.animate({height: ($place.height() +start_height)+'px'}, 'slow', function() {
+             $('#more_place').toggle();
+             flipPlace = flipPlace == -1? 1 :-1;
+             animateFlipY(flipPlace, $('#place .fa-sort-desc'));
+           });
+         }
       });
     }
 
@@ -394,6 +426,7 @@
           hideJobMoreButton();
 
           handleBtnMoreEvent();
+          //animateFilterPanelWhenHeightChanged();
 
           handleScrollTopEvent();
 
