@@ -35,7 +35,7 @@
    </div>
    <div class="row">
      <% if false == current_user.blank? && current_user.id == @company.user_id %>
-      <%= link_to("修改", edit_company_path(@company), class:"btn btn-primary")%>
+      <%= link_to("修改", edit_company_path(@company), class:"btn btn-primary btn_change")%>
       <% end %>
    </div>
 </div>

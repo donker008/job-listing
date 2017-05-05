@@ -24,6 +24,7 @@ class CompaniesController < ApplicationController
     @company.user_id = current_user.id;
     if @company.save
       flash[:notice] = "公司信息修改成功"
+      redirect_to admin_jobs_path
     else
       flash[:warning] = "公司信息修改失败"
     end

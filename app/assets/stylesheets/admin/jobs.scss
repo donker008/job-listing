@@ -16,10 +16,11 @@ th{
 td{
   font-size: 14px;
   font-weight: 100;
-}
+  }
 .btn_new_job{
   background: #00c5b6 !important;
   border: none !important;
+  margin-left: 15px;
 }
 
 .btn_release_job{
@@ -109,4 +110,8 @@ td{
 
 .tab_cell_job{
   width: 20%;
+}
+
+.admin_new_job{
+  margin-bottom: 100px;
 }

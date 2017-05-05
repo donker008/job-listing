@@ -5,6 +5,6 @@
       <%= f.input :description , label: "公司简介:"%>
       <%= f.input :brand_icon, label: "公司图标" %>
       <%= f.input :industry, collection:@industries, prompt: "选择行业" %>
-      <%= f.submit "更新", class:"btn btn-lg btn-danger", data:{disable_width: "创建中..."} %>
+      <%= f.submit "更新", class:"btn btn-lg btn-danger btn_change", data:{disable_width: "创建中..."} %>
    </div>
 <% end %>

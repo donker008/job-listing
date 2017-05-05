@@ -3,7 +3,7 @@ class Admin::JobsController < ApplicationController
   before_action :require_is_admin
   layout  "admin"
   def index
-    @jobs = Job.all.order("created_at DESC")
+    @jobs = Job.where(:user_id => current_user.id).all.order("created_at DESC")
     isUserDashBoard = params[:isUserDashBoard]
     if !isUserDashBoard.blank? && isUserDashBoard
         @isUserDashBoard = true
@@ -18,6 +18,7 @@ class Admin::JobsController < ApplicationController
       redirect_to new_company_path
     end
     @academics = Academic.all
+    @workplaces = Workplace.all
   end
 
   def create
@@ -42,16 +43,18 @@ class Admin::JobsController < ApplicationController
 
   def edit
     @job = Job.find(params[:id])
+    make_sure_job_right(@job)
     if @job.blank?
       flash[:alert] = "Job don't exist"
       redirect_to admin_jobs_path
     end
     @academics = Academic.all
+    @workplaces = Workplace.all
   end
 
   def update
-
     @job = Job.find(params[:id])
+    make_sure_job_right(@job)
     if @job.update(job_params)
       flash[:notice] = "Update Job successful."
       redirect_to admin_jobs_path
@@ -64,6 +67,7 @@ class Admin::JobsController < ApplicationController
   def show
 
     @job = Job.find(params[:id])
+    make_sure_job_right(@job)
     if @job.hide
       redirect_to admin_jobs_path
     end
@@ -73,6 +77,7 @@ class Admin::JobsController < ApplicationController
 
   def destroy
     @job = Job.find(params[:id])
+    make_sure_job_right(@job)
     if @job.blank?
 
       flash[:warning] = "Failed to remove job, can't find job."
@@ -130,6 +135,13 @@ class Admin::JobsController < ApplicationController
 
   def job_params
     params.require(:job).permit( :title, :description, :salaryMax, :salaryMin, :contact, :hide, :work_years, :work_place, :education)
+  end
+
+  def make_sure_job_right(job)
+    if false == job.blank? && job.user_id != current_user.id
+      flash[:alert] = "不能编辑其他公司岗位"
+      redirect_to admin_jobs_path
+    end
   end
 
 
