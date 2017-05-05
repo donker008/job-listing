@@ -1,7 +1,7 @@
 
 <div class="row jobcell">
 <div class="jobinfo_left col-sm-7 col-md-7">
-  <h4><%= link_to(job.title + '['+job.work_place+']',  job_path(job))%></h4>
+  <h4><%= link_to(job.title + '['+job.work_place_format(@workplaces)+']',  job_path(job))%></h4>
   <div class="row jobinfo_left_salary">
 
     <div class="salary_part col-sm-7 col-md-7">

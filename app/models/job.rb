@@ -42,6 +42,9 @@ def relase_date_format
   end
 end
 
+def work_place_format(places)
+    return places[self.work_place.to_i-1].name
+end
 
 private
 
