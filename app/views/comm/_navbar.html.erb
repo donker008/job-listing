@@ -26,7 +26,12 @@
             <% if current_user && current_user.is_admin? %>
             <li>
               <%= link_to("岗位管理", admin_jobs_path) %>
+            </li>
+            <li>
               <%= link_to("公司信息", companies_path) %>
+            </li>
+            <li class="divider" role="separator"></li>
+            <li>
               <%= link_to("我的岗位", admin_resumes_path)%>
             </li>
             <% else %>
