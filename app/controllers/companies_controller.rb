@@ -27,9 +27,10 @@ class CompaniesController < ApplicationController
       redirect_to admin_jobs_path
     else
       flash[:warning] = "公司信息修改失败"
+      @industries = Industry.all
+      render :new
     end
-    @industries = Industry.all
-    render :new
+
   end
 
   def edit

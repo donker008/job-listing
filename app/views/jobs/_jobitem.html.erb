@@ -33,7 +33,7 @@
         <h4><%= link_to(job.company.name, company_path(job.company)) %></h4>
         <% if job.company.stars == 0 %>
             <% 5.times do |i| %>
-              <img src="/images/icon_star_red.png"/>
+              <img src="/images/icon_star.png"/>
             <% end %>
         <% elsif job.company.stars == 1%>
             <% 1.times do |i| %>
