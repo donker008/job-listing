@@ -319,7 +319,81 @@
       });
     }
 
+    function hideJobMoreButton() {
+      $("#more_place").hide();
+      $("#more_industry").hide();
+    }
+
+
+    jQuery.fn.rotate = function(degress){
+      $(this).css(
+        {
+          // '-webkit-transform' : 'rotate('+degress+'deg)',
+          // '-moz-transform' : 'rotate('+degress+'deg)',
+          // '-ms-transform' : 'rotate('+degress+'deg)',
+          // 'transform' : 'rotate('+degress+'deg)',
+        }
+      );
+    }
+
+    jQuery.fn.flipy = function(flip){
+      $(this).css(
+        {
+          // '-webkit-transform' : 'rotate('+degress+'deg)',
+          // '-moz-transform' : 'rotate('+degress+'deg)',
+          // '-ms-transform' : 'rotate('+degress+'deg)',
+          // 'transform' : 'rotate('+degress+'deg)',
+          'transform' : 'scale(1,'+flip+')',
+        }
+      );
+    }
+
+    var rotationPlaceArrow = 0;
+    var rotationIndustryArrow = 0;
+
+    function animateRotate(angle, element){
+      $({deg: 0}).animate({deg: angle}, {
+        duration: 500,
+        step: function(now){
+            element.rotate(now)
+        }
+      });
+    }
+
+    function animateFlipY(flip, element){
+      $({deg: 0}).animate({deg: flip}, {
+        duration: 200,
+        step: function(now){
+            element.flipy(now)
+        }
+      });
+    }
+
+    var   flipPlace = 1;
+    var   flipIndustry = 1;
+
+    function handleBtnMoreEvent() {
+
+      $("#btn-more-place").click(function functionName() {
+
+        $('#more_place').fadeToggle();
+        flipPlace = flipPlace == -1? 1 :-1;
+        animateFlipY(flipPlace, $('#place .fa-sort-desc'));
+      });
+      
+      $("#btn-more-industry").click(function functionName() {
+        $('#more_industry').fadeToggle();
+        flipIndustry = flipIndustry == -1 ? 1: -1;
+        animateFlipY(flipPlace, $('#industry .fa-sort-desc'));
+      });
+    }
+
+
     $(document).ready(function(){
+
+          hideJobMoreButton();
+
+          handleBtnMoreEvent();
 
           handleScrollTopEvent();
 

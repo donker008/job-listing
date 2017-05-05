@@ -15,7 +15,14 @@
             <% end %>
 
           <% end %>
-          <span class="btn-more">更多 <i class="fa fa-sort-desc" aria-hidden="true"></i></span>
+          <span class="btn-more" id="btn-more-place">更多 <i class="fa fa-sort-desc" aria-hidden="true"></i></span>
+          <div id="more_place">
+            <% @workplaces.each_with_index do |place, index| %>
+                <% if index > 4%>
+                <a class="filter_place_item place" id="<%= index+1 %>"><%= place.name %></a>
+                <% end %>
+            <% end %>
+          </div>
       </li>
       <li class="chosen" id = "work_years">
         <span class="title">工作经验:</span>
@@ -43,7 +50,14 @@
               <a  id="<%=index+1%>"  > <%= industry.name %> </a>
               <% end %>
           <% end %>
-          <span class="btn-more" href="javascript:;">更多 <i class="fa fa-sort-desc" aria-hidden="true"></i></span>
+          <span class="btn-more"  id="btn-more-industry">更多 <i class="fa fa-sort-desc" aria-hidden="true"></i></span>
+          <div id="more_industry">
+            <% @industries.each_with_index do |industry, index| %>
+              <% if index > 4 %>
+              <a  id="<%=index+1%>"  > <%= industry.name %> </a>
+              <% end %>
+            <% end %>
+          </div>
         </li>
         <li class="order" id="order">
           <div class="order_part">
