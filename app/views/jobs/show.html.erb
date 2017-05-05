@@ -4,8 +4,8 @@
     <div class="col-sm-10 col-md-10">
       <span class="new_job_title"><%= @job.title %></span> <span class="job_date"><%= @job.created_at.strftime("%m/%d") %>发布</span>
       <p>
-        <span class="job_salaray"><%= @job.salaryMin %> - <%= @job.salaryMax %></span>
-        <span class="job_simple_info">/<%= @job.work_place %>/经验<%= @job.work_years %>年/<%= @job.education %></span>
+        <span class="job_salaray"><%= @job.salary_format %></span>
+        <span class="job_simple_info">/<%= @job.work_place %>/<%= @job.work_years_format %>/<%= @academics[ @job.education.to_i-1].name %></span>
       </p>
     </div>
     <div class="col-sm-2 col-md-2">

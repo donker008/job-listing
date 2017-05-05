@@ -17,7 +17,7 @@ class JobsController < ApplicationController
       end
     @workplaces = Workplace.all
     @industries = Industry.all
-
+    @academics = Academic.all
   end
 
   def show
@@ -27,6 +27,7 @@ class JobsController < ApplicationController
       redirect_to jobs_path
     end
     @industries = Industry.all
+    @academics = Academic.all
   end
 
   def new

@@ -5,8 +5,8 @@
   <div class="row jobinfo_left_salary">
 
     <div class="salary_part col-sm-7 col-md-7">
-      <span class="salary"><%=job.salaryMin%> - <%=job.salaryMax%></span>
-      <span class="job_other">经验<%= job.work_years %>/<%= job.education %></span>
+      <span class="salary"><%=job.salary_format%></span>
+      <span class="job_other"><%= job.work_years_format %>/<%= @academics[job.education.to_i-1].name %></span>
     </div>
     <div class="comment_icons col-sm-5 col-md-5">
         <div class="row">
@@ -78,7 +78,7 @@
       <% end %>
     </div>
     <div class="col-sm-4 col-md-4 release_date">
-      <span><%= job.created_at.strftime("%Y/%m/%d")%>发布</span>
+      <span><%= job.relase_date_format %>发布</span>
     </div>
   </div>
 </div>

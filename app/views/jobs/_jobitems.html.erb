@@ -1,6 +1,6 @@
 
 <div id="jobs_grid" class="job_grid">
-  <%= render :partial => "jobitem", :collection => @jobs , :as => :job  %>
+  <%= render :partial => "jobitem", :collection => @jobs , :as => :job %>
   <div class="row">
     <div class="flickr_pagination">
         <%= will_paginate @jobs, :container => false , remote: true %>
