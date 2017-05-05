@@ -97,41 +97,41 @@
 
           var value = $(this).value;
           var needUseAjax = false;
-          var valuesToSubmit = '';
+          var valuesToSubmit = filterQueryData();
           var ahref = $(this).attr("href");
           //sort new , default
           var linkid = ($(this).prop("id"));
+
+
           if(linkid=='order_new'){
-            order = "order=by_new";
-            localStorage.setItem("order", order);
+
+            valuesToSubmit['order'] = "by_new";
+            localStorage.setItem("order", "by_new");
             needUseAjax = true;
           }
           else if(linkid == 'order_default'){
-            order = "order=by_default";
-            localStorage.setItem("order", order);
+
+            valuesToSubmit['order'] = "by_default";
+            localStorage.setItem("order", "by_default");
             needUseAjax = true;
           }
 
           if(needUseAjax){
 
             var myurl = "/jobs";
-            valuesToSubmit += filterQueryStr();
-            var encodeValues = encodeURIComponent(valuesToSubmit);
-
-            console.log("valuesToSubmit" + valuesToSubmit + "myurl : " + myurl);
 
             if(valuesToSubmit != null){
 
               $.ajax({
                 type: "POST",
                 url: myurl,
-                data: encodeValues,
+                data: valuesToSubmit,
                 dataType: "html"
               }).success(function (json) {
-                console.log("myurl: " + myurl + "\n" + "valuesToSubmit : " + valuesToSubmit + "\n" +  "success: " + json);
+                console.log("handleLinkClickEventFromFilterArea myurl: " + myurl + "\n" + "valuesToSubmit : " + JSON.stringify(valuesToSubmit) + "\n" +  "success: " + json);
                 eval(json);
               }).error(function (error) {
-                console.log("myurl: " + myurl + "\n" + "valuesToSubmit : " + valuesToSubmit + "\n" +  "error: " + error);
+                console.log("handleLinkClickEventFromFilterArea myurl: " + myurl + "\n" + "valuesToSubmit : " + JSON.stringify(valuesToSubmit) + "\n" +  "error: " + JSON.stringify(error));
               });
             }
           }
@@ -144,19 +144,24 @@
 
          var value = $(event.target).text()
          var needUseAjax = false;
-         var valuesToSubmit = '';
+         var valuesToSubmit = filterQueryData();
          var href = $(this).attr("href");
 
          //will page search job list or normal job list
-         if(href.startsWith('/jobs/search?') ||
-           href.startsWith('/jobs?')){
-           needUseAjax = true;
-           if(value != null){
-             valuesToSubmit = "page="+value;
-           }
-         }
+        //  if(href.startsWith('/jobs/search?') ||
+        //    href.startsWith('/jobs?')){
+        //    needUseAjax = true;
+        //    if(value != null){
+        //      valuesToSubmit = "page="+value;
+        //    }
+        //  }
 
-         console.log("valuesToSubmit" + valuesToSubmit + " href : " + href);
+        if(href.startsWith('/jobs/search?')){
+          needUseAjax = true;
+          if(value != null){
+            valuesToSubmit["page"] = value;
+          }
+        }
 
          if(needUseAjax){
 
@@ -168,22 +173,19 @@
               myurl = "/jobs";
            }
            myurl = window.location.origin + myurl;
-           valuesToSubmit += filterQueryStr();
-           var encodeValues =  encodeURIComponent(valuesToSubmit);
-           console.log("myurl : " + myurl + " valuesToSubmit:" + valuesToSubmit);
 
            if(valuesToSubmit != null){
 
              $.ajax({
                type: "POST",
                url: myurl,
-               data: encodeValues,
+               data: valuesToSubmit,
                dataType: "html"
              }).success(function (json) {
-               console.log("myurl: " + myurl + "\n" + "valuesToSubmit : " + valuesToSubmit + "\n" +  "success: " + json);
+               console.log("handleLinkClickEventFromPaginate herf:" + href + " myurl: " + myurl + "\n" + "valuesToSubmit : " + JSON.stringify(valuesToSubmit) + "\n" +  "success: " + json);
                eval(json);
              }).error(function (error) {
-               console.log("myurl: " + myurl + "\n" + "valuesToSubmit : " + valuesToSubmit + "\n" +  "error: " + error);
+               console.log("handleLinkClickEventFromPaginate myurl: " + myurl + "\n" + "valuesToSubmit : " + JSON.stringify(valuesToSubmit) + "\n" +  "error: " + JSON.stringify(error));
              });
            }
          }
@@ -196,11 +198,12 @@
 
                var searchword = $(this).parent().find("#search-input").val();
                localStorage.setItem("search", searchword);
-               var valuesToSubmit = $(this).serialize();
+              //  var valuesToSubmit = $(this).serialize();
+               var valuesToSubmit = filterQueryData();
                //utf8=✓&q[searchjob_cont]=&q[title_cont]=
-               valuesToSubmit = decodeURIComponent(valuesToSubmit);
-               valuesToSubmit += filterQueryStr();
-               var encodeValues = encodeURIComponent(valuesToSubmit);
+              //  valuesToSubmit = decodeURIComponent(valuesToSubmit);
+              //  valuesToSubmit += filterQueryStr();
+              //  var encodeValues = encodeURIComponent(valuesToSubmit);
                var myurl = $(this).prop('action');
                localStorage.setItem('currentUrl', myurl);
               //  myurl = window.location.origin + myurl;
@@ -208,17 +211,17 @@
                $.ajax({
                  type: "POST",
                  url: myurl,
-                 data: encodeValues,
+                 data: valuesToSubmit,
                  dataType: "html"
                }).success(function (json) {
-                 console.log("myurl: " + myurl + "\n" + "valuesToSubmit : " + valuesToSubmit + "\n" +  "success: " + json);
+                 console.log("handleSearchFormSubmitEvent myurl: " + myurl + "\n" + "valuesToSubmit : " + JSON.stringify(valuesToSubmit) + "\n" +  "success: " + json);
                }).error(function (error) {
-                 console.log("myurl: " + myurl + "\n" + "valuesToSubmit : " + valuesToSubmit + "\n" +  "error: " + error);
+                 console.log("handleSearchFormSubmitEvent myurl: " + myurl + "\n" + "valuesToSubmit : " + JSON.stringify(valuesToSubmit) + "\n" +  "error: " + JSON.stringify(error));
                });
            });
      }
 
-    function filterQueryStr() {
+    function filterQueryData() {
 
       var valuesToSubmit = '';
       var place =  localStorage.getItem('place');
@@ -227,23 +230,28 @@
       var industry =  localStorage.getItem('industry');
       var order =  localStorage.getItem('order');
 
-      if(parseInt(place) != 1){
-        valuesToSubmit += "&q[work_place_eq]="+place;
+      var plainObject = {};
+
+      if(place != null &&  parseInt(place) != 1){
+        // valuesToSubmit += "&q[work_place_eq]="+place;
+        plainObject["q"] = {work_place_eq:place}
       }
-      if(parseInt(work_years) != 1){
-        valuesToSubmit += "&q[work_years_eq]="+work_years;
+      if(work_years != null && parseInt(work_years) != 1){
+        // valuesToSubmit += "&q[work_years_eq]="+work_years;
+        plainObject["q"] = {work_years_eq:work_years}
       }
-      if(parseInt(education) != 1){
-        valuesToSubmit += "&q[education_eq]="+education;
+      if(education != null && parseInt(education) != 1){
+        // valuesToSubmit += "&q[education_eq]="+education;
+        plainObject["q"] = {education_eq:education}
       }
-      if(parseInt(industry) != 1){
-        valuesToSubmit += "&q[company_industry_eq]="+industry;
+      if(industry != null && parseInt(industry) != 1){
+        // valuesToSubmit += "&q[company_industry_eq]="+industry;
+        plainObject["q"] = {company_industry_eq:industry}
       }
-      if(order != null){
-        valuesToSubmit += "&";
-        valuesToSubmit += order;
+      if(order != null &&  order instanceof String){
+        plainObject["order"] = order;
       }
-      return valuesToSubmit;
+      return plainObject;
     }
 
     function handleOrderBySalaryEvent() {
@@ -255,39 +263,34 @@
             myurl = '/jobs'
           }
           if(!myurl.startsWith('http')){
-            myurl = window.location.origin + myurl;  
+            myurl = window.location.origin + myurl;
           }
 
           var value = this.value;
-          var valuesToSubmit = '';
+          var valuesToSubmit = filterQueryData();
 
            if(1 != value){
              var order = null;
              if(2 == value){
-                 order = "order=by_min_salary";
+                 valuesToSubmit["order"] = "by_min_salary";
+                  localStorage.setItem("order", 'by_min_salary');
              }
              else if(3 == value){
-                 order = "order=by_max_salary";
+                 valuesToSubmit["order"] = "by_max_salary";
+                 localStorage.setItem("order", 'by_max_salary');
              }
-             if(order != null){
-               localStorage.setItem("order", order);
-               valuesToSubmit += "&";
-               valuesToSubmit += order;
-             }
-           }
-          valuesToSubmit += filterQueryStr();
-          var encodeValues = encodeURIComponent(valuesToSubmit);
 
+           }
           $.ajax({
             type: "POST",
             url: myurl,
-            data: encodeValues,
+            data: valuesToSubmit,
             dataType: "html"
           }).success(function (json) {
-            console.log("myurl: " + myurl + "\n" + "valuesToSubmit : " + valuesToSubmit + "\n" +  "success: " + json);
+            console.log("myurl: " + myurl + "\n" + "valuesToSubmit : " + JSON.stringify(valuesToSubmit) + "\n" +  "success: " + json);
             eval(json);
           }).error(function (error) {
-            console.log("myurl: " + myurl + "\n" + "valuesToSubmit : " + valuesToSubmit + "\n" +  "error: " + error);
+            console.log("myurl: " + myurl + "\n" + "valuesToSubmit : " + JSON.stringify(valuesToSubmit) + "\n" +  "error: " + JSON.stringify(error));
           });
 
         });
@@ -328,11 +331,11 @@
           // hook order by new or default event
           handleLinkClickEventFromFilterArea();
           // hook paginate event
-          handleLinkClickEventFromPaginate();
+           handleLinkClickEventFromPaginate();
           //hook submit event
-          handleSearchFormSubmitEvent();
+           handleSearchFormSubmitEvent();
           //hook order by salary vent
-          handleOrderBySalaryEvent();
+           handleOrderBySalaryEvent();
         });
 
 </script>

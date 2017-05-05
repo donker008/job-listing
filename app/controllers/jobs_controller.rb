@@ -63,6 +63,8 @@ class JobsController < ApplicationController
     elsif order == 'by_max_salary'
       @jobs = @q.result(distinct: true).includes(:company).order(salaryMax: :DESC).page(params[:page])
     end
+    @industries = Industry.all
+    @academics = Academic.all
     respond_to do |format|
       format.js
       # format.html

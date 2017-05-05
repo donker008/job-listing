@@ -16,7 +16,7 @@ class Job < ApplicationRecord
   ransack_alias :searchjob, :title_or_description
 
 
-  self.per_page = 5
+  self.per_page = 2
 
 def work_years_format
   if self.work_years <= -1
