@@ -229,24 +229,27 @@
       var education =  localStorage.getItem('education');
       var industry =  localStorage.getItem('industry');
       var order =  localStorage.getItem('order');
-
+      var search = localStorage.getItem('search');
       var plainObject = {};
 
       if(place != null &&  parseInt(place) != 1){
         // valuesToSubmit += "&q[work_place_eq]="+place;
-        plainObject["q"] = {work_place_eq:place}
+        plainObject["q"] = {work_place_eq:place};
       }
       if(work_years != null && parseInt(work_years) != 1){
         // valuesToSubmit += "&q[work_years_eq]="+work_years;
-        plainObject["q"] = {work_years_eq:work_years}
+        plainObject["q"] = {work_years_eq:work_years};
       }
       if(education != null && parseInt(education) != 1){
         // valuesToSubmit += "&q[education_eq]="+education;
-        plainObject["q"] = {education_eq:education}
+        plainObject["q"] = {education_eq:education};
       }
       if(industry != null && parseInt(industry) != 1){
         // valuesToSubmit += "&q[company_industry_eq]="+industry;
-        plainObject["q"] = {company_industry_eq:industry}
+        plainObject["q"] = {company_industry_eq:industry};
+      }
+      if(search != null){
+        plainObject['q'] = {searchjob_cont:search};
       }
       if(order != null &&  order instanceof String){
         plainObject["order"] = order;
