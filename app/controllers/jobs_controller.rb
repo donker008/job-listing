@@ -65,6 +65,7 @@ class JobsController < ApplicationController
     end
     @industries = Industry.all
     @academics = Academic.all
+    @workplaces = Workplace.all
     respond_to do |format|
       format.js
       # format.html
