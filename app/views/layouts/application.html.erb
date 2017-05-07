@@ -194,7 +194,18 @@
 
     function handleSearchFormSubmitEvent() {
 
-           $("#job_search").submit(function() {
+           $("#job_search").submit(function(event) {
+
+            var search =  $('#search-input').val();
+            console.log("search : " + search);
+            localStorage.setItem('#search-input', search);
+             event.preventDefault() ;
+             event.stopPropagation();
+              // alert("Form Submission prevented / stoped.");
+              // return
+
+              event.preventDefault();
+              event.stopImmediatePropagation();
 
                var searchword = $(this).parent().find("#search-input").val();
                localStorage.setItem("search", searchword);
@@ -214,6 +225,7 @@
                  data: valuesToSubmit,
                  dataType: "html"
                }).success(function (json) {
+                 eval(json);
                  console.log("handleSearchFormSubmitEvent myurl: " + myurl + "\n" + "valuesToSubmit : " + JSON.stringify(valuesToSubmit) + "\n" +  "success: " + json);
                }).error(function (error) {
                  console.log("handleSearchFormSubmitEvent myurl: " + myurl + "\n" + "valuesToSubmit : " + JSON.stringify(valuesToSubmit) + "\n" +  "error: " + JSON.stringify(error));
@@ -232,28 +244,37 @@
       var search = localStorage.getItem('search');
       var plainObject = {};
 
-      if(place != null &&  parseInt(place) != 1){
+      //alert("place1" + parseIntq(place,10));
+      var q = {};
+      plainObject["q"] = q;
+      if(place != null && (parseInt(place,10) != 1)){
         // valuesToSubmit += "&q[work_place_eq]="+place;
-        plainObject["q"] = {work_place_eq:place};
+        q["work_place_eq"] = place;q
+        //alert("place2" + parseInt(place,10));
+        console.log("--< place " + JSON.stringify(plainObject["q"]));
       }
+
       if(work_years != null && parseInt(work_years) != 1){
         // valuesToSubmit += "&q[work_years_eq]="+work_years;
-        plainObject["q"] = {work_years_eq:work_years};
+        q["work_years_eq"] = work_years;
       }
       if(education != null && parseInt(education) != 1){
         // valuesToSubmit += "&q[education_eq]="+education;
-        plainObject["q"] = {education_eq:education};
+        q["education_eq"] = education;
       }
       if(industry != null && parseInt(industry) != 1){
         // valuesToSubmit += "&q[company_industry_eq]="+industry;
-        plainObject["q"] = {company_industry_eq:industry};
+        q["company_industry_eq"] = industry;
       }
       if(search != null){
-        plainObject['q'] = {searchjob_cont:search};
+        q['searchjob_cont'] = search;
       }
       if(order != null &&  order instanceof String){
         plainObject["order"] = order;
       }
+
+      console.log("--> place2: " + parseInt(place) + " work_years " + work_years + " education " + education + " industry "+ industry + " order " + order + " search " + search);
+      console.log("--> plainObject: " + JSON.stringify(plainObject));
       return plainObject;
     }
 
@@ -316,7 +337,15 @@
       $(".filter_part a").on('click', function(event){
           var id = $(this).parent().prop("id");
           var type = parseInt($(this).prop("id"));
-          localStorage.setItem(id, type);
+          if(id == "more_place"){
+            localStorage.setItem('place', type);
+          }
+          else if(id == "more_industry"){
+            localStorage.setItem('industry', type);
+          }
+          else{
+            localStorage.setItem(id, type);
+          }
           $(this).parent().find("a").removeClass("active");
 
           if('more_place' == id || 'more_industry' == id){

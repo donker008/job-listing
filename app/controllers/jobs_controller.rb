@@ -51,9 +51,19 @@ class JobsController < ApplicationController
   end
 
   def search
+
     @q = Job.ransack(params[:q])
+    # render plain: params.inspect
+    # return
+    filters = params[:filter]
     order  = params[:order]
-    orderType = ''
+    orderType = ''    
+
+    # work_place_eq = filters[:work_place_eq]
+    # work_years_eq = filters[:work_years_eq]
+    # education_eq = filters[:education_eq]
+    # company_industry_eq = filters[:company_industry_eq]
+
     if order.blank? || order == 'by_default'
       @jobs = @q.result(distinct: true).includes(:company).order(updated_at: :DESC).page(params[:page])
     elsif order == 'by_new'
