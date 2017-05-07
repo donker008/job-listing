@@ -43,7 +43,11 @@ def relase_date_format
 end
 
 def work_place_format(places)
-    return places[self.work_place.to_i-1].name
+    # places.each do |p|
+    #   if p.id == self.work_place
+    # end
+    # return places[self.work_place.to_i-1].name
+    return self.work_place
 end
 
 private

@@ -247,9 +247,9 @@
       //alert("place1" + parseIntq(place,10));
       var q = {};
       plainObject["q"] = q;
-      if(place != null && (parseInt(place,10) != 1)){
+      if(place != null && (place != '不限')){
         // valuesToSubmit += "&q[work_place_eq]="+place;
-        q["work_place_eq"] = place;q
+        q["work_place_eq"] = place;
         //alert("place2" + parseInt(place,10));
         console.log("--< place " + JSON.stringify(plainObject["q"]));
       }
@@ -273,7 +273,7 @@
         plainObject["order"] = order;
       }
 
-      console.log("--> place2: " + parseInt(place) + " work_years " + work_years + " education " + education + " industry "+ industry + " order " + order + " search " + search);
+      console.log("--> place2: " + (place) + " work_years " + work_years + " education " + education + " industry "+ industry + " order " + order + " search " + search);
       console.log("--> plainObject: " + JSON.stringify(plainObject));
       return plainObject;
     }
@@ -337,8 +337,9 @@
       $(".filter_part a").on('click', function(event){
           var id = $(this).parent().prop("id");
           var type = parseInt($(this).prop("id"));
-          if(id == "more_place"){
-            localStorage.setItem('place', type);
+          if(id == "more_place" || id == 'place'){
+            var type_name = ($(this).text());
+            localStorage.setItem('place', type_name);
           }
           else if(id == "more_industry"){
             localStorage.setItem('industry', type);
